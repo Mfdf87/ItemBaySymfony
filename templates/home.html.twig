@@ -1,5 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+ItemBay - Accueil
+{% endblock %}
+
 {% block body %}
-<h1> Je suis la page home </h1>
+    <div class = "container mt-4">
+        <div class="jumbotron">
+            <h1 class="display-4">Bienvenue sur itembay</h1>
+            <p class="lead">Avec ce site, vous pourrez voir et acheter des items du jeu vidéo.</p>
+            <hr class="my-4">
+            <p>Pour commencer, vous pouvez vous inscrire ou vous connecter avec le bouton ci-dessous.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Inscription</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Connexion</a>
+            </p>
+        </div>
+    </div>
 {% endblock %}

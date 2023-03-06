@@ -2,19 +2,15 @@
 
 namespace App\Controller;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\User;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
-    public function home(ManagerRegistry $doctrine): Response
+    #[Route('/', 'home.index', methods: ['GET'])]
+    public function index() :Response
     {
-        $entityManager = $doctrine->getManager();
-        return $this->render('home.html.twig', [
-        ]);
+        return $this->render('home.html.twig');
     }
 }
