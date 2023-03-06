@@ -15,7 +15,6 @@ class HomeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         return $this->render('home.html.twig', [
-            'allah' => $entityManager->getRepository('App\Entity\User')->find(1),
         ]);
     }
 }
