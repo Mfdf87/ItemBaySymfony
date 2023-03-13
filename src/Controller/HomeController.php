@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', 'home.index', methods: ['GET'])]
+    #[Route('/home', 'home.index', methods: ['GET'])]
     public function index() :Response
     {
         return $this->render('home.html.twig');
@@ -20,6 +20,14 @@ class HomeController extends AbstractController
     {
         return $this->render('Information.html.twig'); //sert à faire le lien 
     }
+
+    /** Route vers un la page support */
+    #[Route('/support_Admin', 'support', methods: ['GET'])] /** Indique les information de l'url  */
+    public function SupAdmin() :Response // Apelle de fonction 
+    {
+        return $this->render('supportadmin.html.twig'); //sert à faire le lien 
+    }
+
 
 }
 
