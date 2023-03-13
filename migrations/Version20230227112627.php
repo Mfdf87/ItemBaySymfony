@@ -29,3 +29,4 @@ final class Version20230227112627 extends AbstractMigration
         $this->addSql('DROP TABLE account');
     }
 }
+?>

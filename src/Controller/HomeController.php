@@ -13,4 +13,14 @@ class HomeController extends AbstractController
     {
         return $this->render('home.html.twig');
     }
+
+    /** Route vers un la page information  */
+    #[Route('/information', 'information', methods: ['GET'])] /** Indique les information de l'url  */
+    public function information() :Response // Apelle de fonction 
+    {
+        return $this->render('Information.html.twig'); //sert à faire le lien 
+    }
+
 }
+
+?>
