@@ -22,3 +22,5 @@ comoser require --dev fakerphp/faker
 
 php bin/console doctrine:fixtures:load
 ```
+1. Lancer le serveur avec la commande suivante : `symfony server:start -d`
+Pour l'arrêter, il faudra faire la commande `symfony server:stop`
