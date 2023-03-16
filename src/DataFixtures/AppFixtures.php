@@ -2,6 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Account;
+use App\Entity\Compte;
+use App\Entity\Item;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -23,14 +26,37 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 100; $i++) {
-            $user = new User;
-            $generatedVar = $this->faker->word();
-            $user -> setName($generatedVar)
-                  -> setEmail($generatedVar . '@example.com')
-                  -> setPassword('password');
-            $manager->persist($user);
+        // On créé 100 items aléatoires
+        for ($i = 0; $i < 15; $i++) {
+            $item = new Item();
+            $item->setNom($this->faker->words(3, true));
+            $item->setStat($this->faker->words(3, true));
+            $item->setDescription($this->faker->words(3, true));
+            $item->setQte($this->faker->words(3, true));
+            $item->setUrl($this->faker->imageUrl(640, 480, 'item', true, true));
+            $date = new \DateTimeImmutable();
+            $date = $date->modify('-' . $this->faker->numberBetween(0, 180) . ' day');
+            $item->setCreatedAt($date);
+            $manager->persist($item);
         }
+
+        $compte = new Compte();
+        // On créé le compte admin admin
+        $compte->setNom('admin');
+        $compte->setPrenom('admin');
+        $compte->setMonnaie(1000);
+        $compte->setIsAdmin(true);
+        $compte->setPassword('admin');
+        $manager->persist($compte);
+
+        // On créé le compte user user
+        $compte = new Compte();
+        $compte->setNom('user');
+        $compte->setPrenom('user');
+        $compte->setMonnaie(1000);
+        $compte->setIsAdmin(false);
+        $compte->setPassword('user');
+        $manager->persist($compte);
         
         $manager->flush();
     }
