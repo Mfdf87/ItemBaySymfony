@@ -18,7 +18,7 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 
 composer require --dev orm-fixtures
-composer require --dev fakerphp/faker
+comoser require --dev fakerphp/faker
 
 php bin/console doctrine:fixtures:load
 ```
