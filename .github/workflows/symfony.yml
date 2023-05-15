@@ -6,8 +6,8 @@
 name: Symfony
 
 on:
-  push:
-    branches: [ "testUnitaire" ]
+  pull_request:
+    branches: [ master ]
 
 permissions:
   contents: read
