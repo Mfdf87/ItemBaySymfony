@@ -8,6 +8,8 @@ name: Symfony
 on:
   pull_request:
     branches: [ master ]
+  push:
+    branches: [ '*' ]
 
 permissions:
   contents: read
