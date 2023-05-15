@@ -25,6 +25,6 @@ class ConnexionController extends AbstractController
 
         dd($email, $password);
 
-        return new Response('ok');
+        return new Response('okk');
     }
 }
