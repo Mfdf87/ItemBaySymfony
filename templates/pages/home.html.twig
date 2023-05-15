@@ -12,7 +12,9 @@ ItemBay - Accueil
           {% for item in items %}
             <div class="col">
               <div class="card shadow-sm">
+                <a href="{{ path('item', {id: item.id, nom: item.nom, description: item.description}) }}">
                 <img src="{{ item.url }}" class="card-img-top" alt="...">
+                </a>
                 <div class="card-body">
                   <h5 class="card-title text-center">{{item.nom}}</h5>
                   <p class="card-text text-center">{{item.description}}</p>
@@ -20,7 +22,7 @@ ItemBay - Accueil
               </div>
             </div>
           {% endfor %}
-        </div
+        </div>
 
         
     </div>

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Item{% endblock %}
+
+{% block body %}
+<div class = "container mt-4">
+        <div class="jumbotron">
+             <!-- Place holder à remplacer par l'image de l'item -->
+        </div>
+
+        <section>
+            <h3>Informations de l'article</h3>
+            <ul>
+                <li>Id de l'article : {{ item.id }} </li>
+                <li>Nom de l'article : {{ item.nom }}</li>
+                <li>Description de l'article : {{ item.description }}</li>
+            </ul>
+        </section>
+
+</div>
+{% endblock %}
