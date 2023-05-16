@@ -41,6 +41,14 @@ jobs:
       run: |
         mkdir -p data
         touch data/database.sqlite
+    - name: Create database datas
+      env:
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+      run: php bin/console doctrine:schema:create
+    - name: Load fixtures
+      env:
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+      run: php bin/console doctrine:fixtures:load --no-interaction
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
