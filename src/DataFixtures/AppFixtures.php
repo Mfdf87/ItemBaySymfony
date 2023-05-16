@@ -47,6 +47,7 @@ class AppFixtures extends Fixture
         $compte->setMonnaie(1000);
         $compte->setIsAdmin(true);
         $compte->setPassword('admin');
+        $compte->setEmail('admin.admin@admin.admin');
         $manager->persist($compte);
 
         // On créé le compte user user
@@ -56,6 +57,7 @@ class AppFixtures extends Fixture
         $compte->setMonnaie(1000);
         $compte->setIsAdmin(false);
         $compte->setPassword('user');
+        $compte->setEmail('user.user@user.user');
         $manager->persist($compte);
         
         $manager->flush();
