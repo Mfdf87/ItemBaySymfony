@@ -13,6 +13,7 @@
         <th scope="col">Password</th>
         <th scope="col">Email</th>
         <th scope="col">Actions</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,10 @@
           <td>{{ compte.id }}</td>
           <td>{{ compte.password }}</td>
           <td>{{ compte.email }}</td>
+          <td>
+              <a href="{{ path('app_gest_joueur', {id: compte.id, nom: compte.nom, prenom: compte.prenom, password: compte.password, email: compte.email}) }}" class="btn btn-primary">Modifier</a>
+          </td>
+
           <td>
               <button class="btn btn-danger" onclick="deleteCompte({{ compte.id }})">Supprimer</button>
           </td>
