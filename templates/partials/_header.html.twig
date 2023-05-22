@@ -26,6 +26,11 @@
                         <li><a class="dropdown-item" href="{{ path('profil') }}">Voir profil</a></li> <!-- information sur le profil  -->
                         <li><a class="dropdown-item" href="#">Panier</a></li>
                         <li><hr class="dropdown-divider"></li>
+                        <!-- Faire in if avec une vérif de la bdd si admin  -->
+                        <li><a class="dropdown-item" href="{{ path('app_gest_boutique') }}">Gestion Boutique Admin</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_gest_cmpt') }}">Gestion Compte Admin</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <!-- Fin du if  -->
                         <li><a class="dropdown-item" href="#">Deconnexion</a></li>
                     </ul>
                 </div>
