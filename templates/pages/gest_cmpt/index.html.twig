@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GestCmptController!{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nom du Compte</th>
+        <th scope="col">Prenom du Compte</th>
+        <th scope="col">ID</th>
+        <th scope="col">Password</th>
+        <th scope="col">Email</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for compte in comptes %}
+        <tr>
+          <td>{{ compte.nom }}</td>
+          <td>{{ compte.prenom }}</td>
+          <td>{{ compte.id }}</td>
+          <td>{{ compte.password }}</td>
+          <td>{{ compte.email }}</td>
+          <td>
+              <a href="{{ path('app_gest_joueur', {id: compte.id, nom: compte.nom, prenom: compte.prenom, password: compte.password, email: compte.email}) }}" class="btn btn-primary">Modifier</a>
+              <button class="btn btn-danger" onclick="deleteCompte({{ compte.id }})">Supprimer</button>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
