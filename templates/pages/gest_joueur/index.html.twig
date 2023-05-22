@@ -8,15 +8,16 @@
             <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle" width="128  " height="128"> <!-- Place holder à remplacer par l'image du profil -->
         </div>
 
-        <section>
-            <h3>Informations personnelles</h3>
-            <ul>
-                <li>Pseudo : Place Holder </li> <!-- Remplacer le place holder  -->
-                <li>Courriel : Place Holder</li> <!-- Remplacer le place holder  -->
-                <li>Mot de passe : Place Holder </li> <!-- Remplacer le place holder  -->
-                <li>Argent :  Place Holder </li> <!-- Remplacer le place holder  -->
-            </ul>
-        </section>
+    <section>
+        <h3>Informations personnelles</h3>
+        <ul>
+            <li>ID : {{ compte.id }}</li>
+            <li>Nom : {{ compte.nom }}</li>
+            <li>Prenom : {{ compte.prenom }}</li>
+            <li>Password : {{ compte.password }}</li> 
+            <li>Email : {{ compte.email }}</li>
 
+        </ul>
+    </section>
 </div>
 {% endblock %}
