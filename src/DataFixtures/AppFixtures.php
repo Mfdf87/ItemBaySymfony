@@ -59,6 +59,19 @@ class AppFixtures extends Fixture
         $compte->setPassword('user');
         $compte->setEmail('user.user@user.user');
         $manager->persist($compte);
+
+        $user = new User();
+        $user->setEmail("admin.admin@admin.admin");
+        $user->setRoles(["ROLE_ADMIN"]);
+        $user->setPassword('$2y$13$vJcupS8M/Vncq5.z0RoMGuZeBKVcjrsTj1GaUl/ZWM1.VXyGQIoLi');
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setEmail("user.user@user.user");
+        $user->setRoles(["ROLE_USER"]);
+        $user->setPassword('$2y$13$gpV8bdCgjdK92q6i3yeleeSE5LgPWvSBwFlst6BBUtPruKYtaJFVC');
+        $manager->persist($user);
+
         
         $manager->flush();
     }
