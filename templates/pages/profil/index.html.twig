@@ -13,10 +13,12 @@ ItemBay - Profil
         <section>
             <h3>Informations personnelles</h3>
             <ul>
-                <li>Pseudo : Place Holder </li> <!-- Remplacer le place holder  -->
-                <li>Courriel : Place Holder</li> <!-- Remplacer le place holder  -->
-                <li>Mot de passe : Place Holder </li> <!-- Remplacer le place holder  -->
-                <li>Argent :  Place Holder </li> <!-- Remplacer le place holder  -->
+                {% if app.user %}
+                    <li>Nom : {{ app.user.nom }}</li>
+                    <li>Prénom : {{ app.user.prenom }}</li>
+                    <li>Email : {{ app.user.email }}</li>
+                    <li>Argent :  {{ app.user.monnaie }}</li>
+                {% endif %}
             </ul>
         </section>
 

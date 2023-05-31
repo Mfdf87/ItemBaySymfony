@@ -13,25 +13,31 @@
                 </ul>
             </div>
             <div id="otherInfos" class="d-flex">
-                <div id="monnaie" class="bg-light" style="width:30px; margin-right:5px;">
-                  test
-                </div>
+                {% if app.user %}
+                    <div id="monnaie" class="bg-light" style="margin-right:5px;">
+                        <p class="text-center">{{ app.user.monnaie }}</p>
+                    </div>
+                {% endif %}
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle" width="32" height="32">
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="{{ path('app_connexion') }}">Connexion</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_inscription') }}">Inscription</a></li>
-                        <li><a class="dropdown-item" href="{{ path('profil') }}">Voir profil</a></li> <!-- information sur le profil  -->
-                        <li><a class="dropdown-item" href="#">Panier</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <!-- Faire in if avec une vérif de la bdd si admin  -->
-                        <li><a class="dropdown-item" href="{{ path('app_gest_boutique') }}">Gestion Boutique Admin</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_gest_cmpt') }}">Gestion Compte Admin</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <!-- Fin du if  -->
-                        <li><a class="dropdown-item" href="{{ path('app_deconnexion') }}">Deconnexion</a></li>
+                        {% if not app.user %}
+                            <li><a class="dropdown-item" href="{{ path('app_connexion') }}">Connexion</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_inscription') }}">Inscription</a></li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li><a class="dropdown-item" href="{{ path('profil') }}">Voir profil</a></li> <!-- information sur le profil  -->
+                            <li><a class="dropdown-item" href="#">Panier</a></li>
+                            {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ path('app_gest_boutique') }}">Gestion Boutique Admin</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_gest_cmpt') }}">Gestion Compte Admin</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_deconnexion') }}">Deconnexion</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
