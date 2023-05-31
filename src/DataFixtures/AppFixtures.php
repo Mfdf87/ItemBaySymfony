@@ -40,26 +40,6 @@ class AppFixtures extends Fixture
             $manager->persist($item);
         }
 
-        $compte = new Compte();
-        // On créé le compte admin admin
-        $compte->setNom('admin');
-        $compte->setPrenom('admin');
-        $compte->setMonnaie(1000);
-        $compte->setIsAdmin(true);
-        $compte->setPassword('admin');
-        $compte->setEmail('admin.admin@admin.admin');
-        $manager->persist($compte);
-
-        // On créé le compte user user
-        $compte = new Compte();
-        $compte->setNom('user');
-        $compte->setPrenom('user');
-        $compte->setMonnaie(1000);
-        $compte->setIsAdmin(false);
-        $compte->setPassword('user');
-        $compte->setEmail('user.user@user.user');
-        $manager->persist($compte);
-
         $user = new User();
         $user->setEmail("admin.admin@admin.admin");
         $user->setRoles(["ROLE_ADMIN"]);
