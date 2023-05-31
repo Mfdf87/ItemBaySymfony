@@ -13,9 +13,11 @@
                 </ul>
             </div>
             <div id="otherInfos" class="d-flex">
-                <div id="monnaie" class="bg-light" style="width:30px; margin-right:5px;">
-                  test
-                </div>
+                {% if app.user %}
+                    <div id="monnaie" class="bg-light" style="margin-right:5px;">
+                        <p class="text-center">{{ app.user.monnaie }}</p>
+                    </div>
+                {% endif %}
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle" width="32" height="32">
