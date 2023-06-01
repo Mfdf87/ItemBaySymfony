@@ -11,15 +11,19 @@ Pour installer le projet symfony sur une machine, voici les différentes étapes
 1. Effectuer la commande suivante : `composer install` pour installer les dépendances requises par le projet
 1. Créer un fichier d'environnement local `.env.dev.local` pour la connexion à la base de données. Dans ce fichier, il faut mettre la ligne suivante : 
 `DATABASE_URL="mysql://itembay:itembay@127.0.0.1:3306/itembay?serverVersion=mariadb-10.6.12&charset=utf8mb4"` avec les informations pour se connecter à la base.
-1. Effectuer les commandes suivantes pour créer la base de donnée et rentrer les données : 
+1. Effectuer les commandes suivantes pour installer toutes les dépendances requises par le projet : 
 ```
-symfony console doctrine:database:create
-php bin/console make:migration
-php bin/console doctrine:migrations:migrate
-
 composer require --dev orm-fixtures
 composer require --dev fakerphp/faker
-
+```
+1. Effectuer la commande suivante pour créer la base de donnée : 
+```
+symfony console doctrine:database:create
+```
+1. Effectuer les commandes suivantes pour rentrer les données dans la base de données et avoir une base de données à jour avec le bon shéma : 
+```
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
 1. Lancer le serveur avec la commande suivante : `symfony server:start -d`
