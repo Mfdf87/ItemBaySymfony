@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion de l'item{% endblock %}
+
+{% block body %}
+  <h1>Modifier l'item</h1>
+  <form method="POST" action="{{ path('app_gest_item') }}">
+    <div class="form-group">
+      <label for="nom">Nom de l'item :</label>
+      <input type="text" class="form-control" id="nom" name="nom" value="{{ nom }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description :</label>
+      <textarea class="form-control" id="description" name="description" required>{{ description }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="quantite">Quantité :</label>
+      <input type="number" class="form-control" id="quantite" name="quantite" value="{{ quantite }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="prix">Prix :</label>
+      <input type="number" step="0.01" class="form-control" id="prix" name="prix" value="{{ prix }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Modifier</button>
+  </form>
+
+  {% if formSubmitted %}
+    <div class="mt-4">
+      <h2>Informations envoyées :</h2>
+      <p>Nom de l'item : {{ nom }}</p>
+      <p>Description : {{ description }}</p>
+      <p>Quantité : {{ quantite }}</p>
+      <p>Prix : {{ prix }}</p>
+    </div>
+  {% endif %}
+{% endblock %}
