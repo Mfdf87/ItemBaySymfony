@@ -29,3 +29,15 @@ php bin/console doctrine:fixtures:load
 ```
 Lancer le serveur avec la commande suivante : `symfony server:start -d`
 Pour l'arrêter, il faudra faire la commande `symfony server:stop`
+
+## Utilisation
+Un utilisateur administrateur est déjà créé avec les identifiants suivants : 
+```
+email : admin.admin@admin.admin
+mot de passe : administateur
+```
+Un utilisateur lambda est déjà créé avec les identifiants suivants : 
+```
+email : user.user@user.user
+mot de passe : utilisateur
+```
