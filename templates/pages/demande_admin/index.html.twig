@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire{% endblock %}
+
+{% block body %}
+  <form method="POST" action="{{ path('app_demande_admin') }}">
+    {% if id == '1' %}
+      <label for="nom">Nom ou Information :</label>
+      <input type="text" id="nom" name="nom">
+
+      <label for="description">Description :</label>
+      <textarea id="description" name="description"></textarea>
+    {% elseif id == '2' %}
+      <label for="nom_ticket">Nom du ticket :</label>
+      <input type="text" id="nom_ticket" name="nom_ticket">
+
+      <label for="description">Description :</label>
+      <textarea id="description" name="description"></textarea>
+
+      <label for="somme">Somme :</label>
+      <input type="text" id="somme" name="somme">
+    {% elseif id == '3' %}
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="nom">
+
+      <label for="description">Description :</label>
+      <textarea id="description" name="description"></textarea>
+
+      <label for="raison">Raison :</label>
+      <input type="text" id="raison" name="raison">
+
+      <label for="joueur">Nom du joueur :</label>
+      <input type="text" id="joueur" name="joueur">
+    {% endif %}
+
+    <div class="text-center">
+        <button a href="{{ path('app_demande_admin') }}" class="btn btn-primary mt-4">Envoie</button>
+    </div>
+  </form>
+{% endblock %}
