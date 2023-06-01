@@ -1,18 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} 
+{% block title %}Inscription{% endblock %} 
+{%block body %}
+{{ form_start(registrationForm) }}
 
-{% block title %}Register{% endblock %}
+<div class="container mt-4">
+  <h1 class="text-center">Inscription</h1>
+  <div>
+    <form action="{{ path('app_inscription') }}" method="POST">
+      <div class="form-group">
+        <label for="exampleInputName" class="form-label mt-4">Prénom</label>
+        <input type=""text" class="form-control" id="inputSurname" value="{{ field_value(registrationForm.prenom) }}" placeholder="Prénom" name="{{ field_name(registrationForm.prenom)}}"
+      </div>
 
-{% block body %}
-    <h1>Register</h1>
+      <div class="form-group">
+        <label for="exampleInputName" class="form-label mt-4">Nom</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Nom" name="{{ field_name(registrationForm.nom) }}"
+      </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
+      <div class="form-group">
+        <label for="exampleInputEmail1" class="form-label mt-4">Adresse email</label>
+        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Adresse email" name="{{ field_name(registrationForm.email) }}" />
+      </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="form-label mt-4">Mot de passe</label>
+        <input type="password" class="form-control" id="inputPassword" placeholder="Mot de passe" name="{{ field_name(registrationForm.plainPassword) }}" />
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-4">Inscription</button>
+      </div>
+    </form>
+  </div>
+</div>
+{{ form_end(registrationForm) }}
 {% endblock %}
