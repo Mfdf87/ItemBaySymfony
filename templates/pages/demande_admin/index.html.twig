@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire{% endblock %}
+
+{% block body %}
+  <div class="container mt-4">
+    {% if id is defined %}
+      <h1 class="text-center">Formulaire de demande</h1>
+      <form method="POST" action="{{ path('app_demande_admin') }}">
+        {% if id == '1' %}
+          <div class="form-group">
+            <label for="nom">Nom ou Information :</label>
+            <input type="text" class="form-control" id="nom" name="nom">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+          </div>
+        {% elseif id == '2' %}
+          <div class="form-group">
+            <label for="nom_ticket">Nom du ticket :</label>
+            <input type="text" class="form-control" id="nom_ticket" name="nom_ticket">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="somme">Somme :</label>
+            <input type="text" class="form-control" id="somme" name="somme">
+          </div>
+        {% elseif id == '3' %}
+          <div class="form-group">
+            <label for="nom">Nom :</label>
+            <input type="text" class="form-control" id="nom" name="nom">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="raison">Raison :</label>
+            <input type="text" class="form-control" id="raison" name="raison">
+          </div>
+
+          <div class="form-group">
+            <label for="joueur">Nom du joueur :</label>
+            <input type="text" class="form-control" id="joueur" name="joueur">
+          </div>
+        {% endif %}
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary mt-4">Envoyer</button>
+        </div>
+      </form>
+    {% else %}
+      <h1 class="text-center">Inscription</h1>
+      <div>
+        <form action="{{ path('app_inscription') }}" method="POST">
+          <div class="form-group">
+            <label for="inputSurname" class="form-label mt-4">Prénom</label>
+            <input type="text" class="form-control" id="inputSurname" value="{{ field_value(registrationForm.prenom) }}" placeholder="Prénom" name="{{ field_name(registrationForm.prenom) }}">
+          </div>
+
+          <div class="form-group">
+            <label for="inputName" class="form-label mt-4">Nom</label>
+            <input type="text" class="form-control" id="inputName" placeholder="Nom" name="{{ field_name(registrationForm.nom) }}">
+          </div>
+
+          <div class="form-group">
+            <label for="inputEmail" class="form-label mt-4">Adresse email</label>
+            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Adresse email" name="{{ field_name(registrationForm.email) }}" />
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword" class="form-label mt-4">Mot de passe</label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="Mot de passe" name="{{ field_name(registrationForm.plainPassword) }}" />
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-4">Inscription</button>
+          </div>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
