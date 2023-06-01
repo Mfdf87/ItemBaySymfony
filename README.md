@@ -16,15 +16,16 @@ Pour installer le projet symfony sur une machine, voici les différentes étapes
 composer require --dev orm-fixtures
 composer require --dev fakerphp/faker
 ```
-1. Effectuer la commande suivante pour créer la base de donnée : 
+Effectuer la commande suivante pour créer la base de donnée : 
 ```
 symfony console doctrine:database:create
 ```
-1. Effectuer les commandes suivantes pour rentrer les données dans la base de données et avoir une base de données à jour avec le bon shéma : 
+## Lancement
+Effectuer les commandes suivantes pour rentrer les données dans la base de données et avoir une base de données à jour avec le bon shéma : 
 ```
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
-1. Lancer le serveur avec la commande suivante : `symfony server:start -d`
+Lancer le serveur avec la commande suivante : `symfony server:start -d`
 Pour l'arrêter, il faudra faire la commande `symfony server:stop`
