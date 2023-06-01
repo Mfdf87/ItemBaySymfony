@@ -24,7 +24,6 @@
           <td>
             <button class="btn btn-danger" onclick="deleteItem({{ item.id }})">Supprimer</button>
             <button class="btn btn-primary" onclick="window.location.href='{{ path('app_gest_item', {id: item.id, nom: item.nom, description: item.description}) }}'">Modifier</button>
-            <button class="btn btn-primary" onclick="window.location.href='{{ path('app_gest_item', {id: item.id, nom: item.nom, description: item.description}) }}'">Modifier</button>
           </td>
         </tr>
       {% endfor %}
