@@ -22,8 +22,18 @@
           <td>{{ item.qte }}</td> 
           <td>{{ item.qte }}</td>  <!-- placeholder du prix   -->
           <td>
-            <button class="btn btn-danger" onclick="deleteItem({{ item.id }})">Supprimer</button>
-            <button class="btn btn-primary" onclick="window.location.href='{{ path('app_gest_item', {id: item.id, nom: item.nom, description: item.description}) }}'">Modifier</button>
+            <div class="d-flex justify-content-between">
+              <form method="POST" action="{{ path('item') }}">
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <input type="hidden" name="action" value="update">
+                <button type="submit" class="btn btn-warning">Modifier</button>
+              </form>
+              <form method="POST" action="{{ path('item') }}">
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <input type="hidden" name="action" value="delete">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </div>
           </td>
         </tr>
       {% endfor %}
