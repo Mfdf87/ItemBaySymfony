@@ -12,12 +12,24 @@ ItemBay - Accueil
           {% for item in items %}
             <div class="col">
               <div class="card shadow-sm">
-                <a href="{{ path('item', {id: item.id, nom: item.nom, description: item.description}) }}">
                 <img src="{{ item.url }}" class="card-img-top" alt="...">
-                </a>
                 <div class="card-body">
                   <h5 class="card-title text-center">{{item.nom}}</h5>
                   <p class="card-text text-center">{{item.description}}</p>
+                </div>
+                <div class="card-footer">
+                  <div class="d-flex justify-content-between">
+                  <form method="POST" action="{{ path('item') }}">
+                    <input type="hidden" name="id" value="{{ item.id }}">
+                    <input type="hidden" name="action" value="buy">
+                    <button type="submit" class="btn btn-primary">Acheter</button>
+                  </form>
+                  <form method="POST" action="{{ path('item') }}">
+                    <input type="hidden" name="id" value="{{ item.id }}">
+                    <input type="hidden" name="action" value="see">
+                    <button type="submit" class="btn btn-primary">Voir</button>
+                  </form>
+                  </div>
                 </div>
               </div>
             </div>

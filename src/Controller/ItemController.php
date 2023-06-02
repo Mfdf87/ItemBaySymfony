@@ -8,20 +8,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ItemController extends AbstractController
 {
-    #[Route('/item/{id}/{nom}/{description}', name: 'item')]
-    public function index($id, $nom, $description): Response
+    #[Route('/item', name: 'item', methods: ['POST'])]
+    public function index(\App\Repository\ItemRepository $itemRepository): Response
     {
-        $item = [
-            'id' => $id,
-            'nom' => $nom,
-            'description' => $description,
-            // ...
-        ];
-
-
-        return $this->render('pages/item/index.html.twig', [
-            'controller_name' => 'ItemController',
-            'item' => $item,
-        ]);
+        $id = $_POST['id'];
+        $action = $_POST['action'];
+        $item = $itemRepository->find($id);
+        if ($action == "see"){
+            return $this->render('pages/item/index.html.twig', [
+                'item' => $item,
+            ]);
+        }
+        if ($action == "buy"){
+            return $this->render('pages/item/index.html.twig', [
+                'item' => $item,
+                'buy' => 'true',
+            ]);
+        }
     }
 }
