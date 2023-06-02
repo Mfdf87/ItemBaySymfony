@@ -14,10 +14,10 @@ ItemBay - Profil
             <h3>Informations personnelles</h3>
             <ul>
                 {% if app.user %}
-                    <li>Nom : {{ app.user.nom }}</li>
-                    <li>Prénom : {{ app.user.prenom }}</li>
-                    <li>Email : {{ app.user.email }}</li>
-                    <li>Argent :  {{ app.user.monnaie }}</li>
+                    <li>Nom : {{ user.nom }}</li>
+                    <li>Prénom : {{ user.prenom }}</li>
+                    <li>Email : {{ user.email }}</li>
+                    <li>Argent :  {{ user.monnaie }}</li>
                 {% endif %}
             </ul>
         </section>
