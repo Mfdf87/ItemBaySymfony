@@ -17,6 +17,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="d-flex justify-content-between">
+                  {% if app.user %}
                   <form method="POST" action="{{ path('item') }}">
                     <input type="hidden" name="id" value="{{ item.id }}">
                     <input type="hidden" name="action" value="buy">
@@ -46,12 +47,7 @@
                         <button type="submit" class="btn btn-danger">Retirer du panier</button>
                       </form>
                     {% endif %}
-                  {% else %}
-                    <form method="POST" action="{{ path('item') }}">
-                      <input type="hidden" name="id" value="{{ item.id }}">
-                      <input type="hidden" name="action" value="addToCart">
-                      <button type="submit" class="btn btn-primary">Ajouter au panier</button>
-                    </form>
+                  {% endif %}
                   {% endif %}
                   <form method="POST" action="{{ path('item') }}">
                     <input type="hidden" name="id" value="{{ item.id }}">

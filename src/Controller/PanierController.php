@@ -12,6 +12,9 @@ class PanierController extends AbstractController
     #[Route('/panier', name: 'app_panier', methods:['POST', 'GET'])]
     public function index(Request $request): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         if ($request->isMethod('POST') && $request->request->get('action') == 'delete') {
             $session = $request->getSession();
             $cart = $session->get('cart');
