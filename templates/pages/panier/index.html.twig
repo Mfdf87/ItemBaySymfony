@@ -21,13 +21,13 @@
           <td>{{ item.nom }}</td>
           <td>{{ item.description }}</td>
           <td>{{ item.qte }}</td> 
-          <td>{{ item.qte }}</td>  <!-- placeholder du prix   -->
+          <td>{{ item.qte }}</td>
           <td>
             <div class="d-flex justify-content-between">
               <form method="POST" action="{{ path('app_panier') }}">
                 <input type="hidden" name="id" value="{{ item.id }}">
                 <input type="hidden" name="action" value="delete">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
+                <button type="submit" class="btn btn-danger">Supprimer du panier</button>
               </form>
             </div>
           </td>

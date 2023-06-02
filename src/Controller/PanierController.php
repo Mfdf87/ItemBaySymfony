@@ -28,7 +28,7 @@ class PanierController extends AbstractController
         if (!$items || $request->request->get('from') == 'home') {
             return $this->redirectToRoute('home.index');
         }
-        return $this->render('panier/index.html.twig', [
+        return $this->render('pages/panier/index.html.twig', [
             'controller_name' => 'PanierController',
             'items' => $items,
         ]);
