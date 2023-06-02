@@ -22,8 +22,23 @@
           <td>{{ compte.id }}</td>
           <td>{{ compte.email }}</td>
           <td>
-              <a href="{{ path('app_gest_joueur', {id: compte.id, nom: compte.nom, prenom: compte.prenom, email: compte.email}) }}" class="btn btn-primary">Modifier</a>
-              <button class="btn btn-danger" onclick="deleteCompte({{ compte.id }})">Supprimer</button>
+              <div class="d-flex justify-content-between">
+                <form method="POST" action="{{ path('profil') }}">
+                  <input type="hidden" name="id" value="{{ compte.id }}">
+                  <input type="hidden" name="action" value="see">
+                  <button type="submit" class="btn btn-info">Voir</button>
+                </form>
+                <form method="POST" action="{{ path('profil') }}">
+                  <input type="hidden" name="id" value="{{ compte.id }}">
+                  <input type="hidden" name="action" value="edit">
+                  <button type="submit" class="btn btn-warning">Modifier</button>
+                </form>
+                <form method="POST" action="{{ path('profil') }}">
+                  <input type="hidden" name="id" value="{{ compte.id }}">
+                  <input type="hidden" name="action" value="delete">
+                  <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+              </div>
           </td>
         </tr>
       {% endfor %}
