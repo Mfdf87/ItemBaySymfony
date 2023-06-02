@@ -25,5 +25,17 @@ class ItemController extends AbstractController
                 'buy' => 'true',
             ]);
         }
+        if ($action == "update"){
+            return $this->render('pages/item/index.html.twig', [
+                'item' => $item,
+                'update' => 'true',
+            ]);
+        }
+        if ($action == "delete"){
+            return $this->render('pages/item/index.html.twig', [
+                'item' => $item,
+                'delete' => 'true',
+            ]);
+        }
     }
 }
