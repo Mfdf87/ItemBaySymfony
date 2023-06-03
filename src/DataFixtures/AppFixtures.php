@@ -157,6 +157,7 @@ class AppFixtures extends Fixture
             $date = new \DateTimeImmutable();
             $date = $date->modify('-' . $this->faker->numberBetween(0, 180) . ' day');
             $item->setCreatedAt($date);
+            $item->setPrix($this->faker->numberBetween(0, 1000));
             $manager->persist($item);
         }
 
@@ -166,7 +167,7 @@ class AppFixtures extends Fixture
         $user->setPassword('$2y$13$vJcupS8M/Vncq5.z0RoMGuZeBKVcjrsTj1GaUl/ZWM1.VXyGQIoLi');
         $user->setNom("admin");
         $user->setPrenom("admin");
-        $user->setMonnaie(1000);
+        $user->setMonnaie(1000000000);
         $manager->persist($user);
 
         $user = new User();
