@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Item;
 use App\Entity\User;
+use App\Entity\AppartenanceItem;
 
 class PanierController extends AbstractController
 {
@@ -16,7 +17,7 @@ class PanierController extends AbstractController
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
         if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_connexion');
         }
         if ($request->isMethod('POST') && $request->request->get('action') == 'buy') {
             $session = $request->getSession();
@@ -36,6 +37,23 @@ class PanierController extends AbstractController
             $argent = $user->getMonnaie();
             // On vérifie si l'utilisateur a assez d'argent
             if ($argent >= $prixTotal) {
+                foreach ($items as $item) {
+                    $appartenanceItem = $doctrine->getRepository(AppartenanceItem::class)->findOneBy(['idUser' => $user, 'idItem' => $item]);
+                    if (!$appartenanceItem) {
+                        $appartenanceItem = new AppartenanceItem();
+                        $appartenanceItem->setIdUser($user);
+                        $appartenanceItem->setIdItem($item);
+                        $appartenanceItem->setQuantité(1);
+                    } else {
+                        $appartenanceItem->setQuantité($appartenanceItem->getQuantité() + 1);
+                    }
+                    $doctrine->getManager()->persist($appartenanceItem);
+
+                    $item->setQte($item->getQte() - 1);
+                    $doctrine->getManager()->persist($item);
+
+                    $doctrine->getManager()->flush();
+                }
                 // On retire l'argent de l'utilisateur
                 $argent -= $prixTotal;
                 $user->setMonnaie($argent);
