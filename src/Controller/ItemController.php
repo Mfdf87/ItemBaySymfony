@@ -73,6 +73,32 @@ class ItemController extends AbstractController
             return $this->redirectToRoute('home.index');
         }
     }
+
+    // Route pour créer un item
+    #[Route('/item/create', name: 'item.create', methods: ['POST', 'GET'])]
+    public function create(ManagerRegistry $doctrine): Response
+    {
+        // On vérifie que l'utilisateur est bien un admin
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            // Sinon on le redirige vers la page d'accueil
+            $this->addFlash('error', 'Vous n\'avez pas les droits pour accéder à cette page');
+            return $this->redirectToRoute('home.index');
+        }
+        else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $nom = $_POST['nom'];
+            $description = $_POST['description'];
+            $prix = $_POST['prix'];
+            $qte = $_POST['qte'];
+            $stats = $_POST['stats'];
+            $image = $_POST['image'];
+            createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image);
+            $this->addFlash('success', 'L\'item a bien été créé');
+            return $this->redirectToRoute('app_gest_boutique');
+        }
+        else {
+            return $this->render('pages/item/create.html.twig');
+        }
+    }
 }
 
 function deleteItem($item, $doctrine){
@@ -84,5 +110,18 @@ function deleteItem($item, $doctrine){
     $doctrine->getManager()->flush();
     // On supprime l'item
     $doctrine->getManager()->remove($item);
+    $doctrine->getManager()->flush();
+}
+
+function createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image){
+    $item = new Item();
+    $item->setNom($nom);
+    $item->setDescription($description);
+    $item->setPrix($prix);
+    $item->setQte($qte);
+    $item->setStat($stats);
+    $item->setUrl($image);
+    $item->setCreatedAt(new \DateTimeImmutable());
+    $doctrine->getManager()->persist($item);
     $doctrine->getManager()->flush();
 }
