@@ -13,6 +13,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">Nom de l'item</th>
         <th scope="col">Description</th>
         <th scope="col">Quantité</th>
@@ -23,6 +24,7 @@
     <tbody>
       {% for item in items %}
         <tr>
+          <td><img src="/images/items/{{ item.url }}" class="card-img-top" alt="Image de l'item" style="max-height: 100px; max-width: 100px;"></td>
           <td>{{ item.nom }}</td>
           <td>{{ item.description }}</td>
           <td>{{ item.qte }}</td> 

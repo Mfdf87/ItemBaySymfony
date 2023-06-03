@@ -4,12 +4,11 @@
 
 {% block body %}
 <div class = "container mt-4">
-        <div class="jumbotron">
-             <!-- Place holder à remplacer par l'image de l'item -->
-        </div>
-
         <section>
             <h3>Informations de l'article</h3>
+            <div class="jumbotron">
+                <img src="/images/items/{{ item.url }}" class="card-img-top" alt="Image de l'item" style="max-height: 400px; max-width: 400px;">
+            </div>
             <ul>
                 <li>Id de l'article : {{ item.id }} </li>
                 <li>Nom de l'article : {{ item.nom }}</li>

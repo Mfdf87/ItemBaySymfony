@@ -9,7 +9,8 @@
         {% else %}
             <h1 class="text-center">Modification de l'item {{ item.nom }}</h1>
         {% endif %}
-        <div class="jumbotron">
+        <div class="jumbotron text-center">
+            <img src="/images/items/{{ item.url }}" class="card-img-top" alt="Image de l'item" style="max-height: 400px; max-width: 400px;">
         </div>
         
         <form method="POST" action="{% if create is defined and create == true %}{{ path('item_create') }}{% else %}{{ path('item_update') }}{% endif %}" enctype="multipart/form-data">
