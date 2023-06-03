@@ -90,7 +90,13 @@ class ItemController extends AbstractController
             $prix = $_POST['prix'];
             $qte = $_POST['qte'];
             $stats = $_POST['stats'];
-            $image = $_FILES['image']['name'];
+            if ($_FILES['image']['name'] != "") {
+                uploadImageItem($_FILES['image']);
+                $image = $_FILES['image']['name'];
+            }
+            else {
+                $image = "Defaut.png";
+            }
             createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image);
             $this->addFlash('success', 'L\'item a bien été créé');
             return $this->redirectToRoute('app_gest_boutique');
@@ -118,8 +124,15 @@ class ItemController extends AbstractController
             $prix = $_POST['prix'];
             $qte = $_POST['qte'];
             $stats = $_POST['stats'];
-            uploadImageItem($_FILES['image']);
-            $imageName = $_FILES['image']['name'];
+            if ($_FILES['image']['name'] != "") {
+                $item = $itemRepository->find($id);
+                $oldImage = $item->getUrl();
+                uploadImageItem($_FILES['image'], true, $oldImage);
+                $imageName = $_FILES['image']['name'];
+            }
+            else {
+                $imageName = "Defaut.png";
+            }
             updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $imageName);
             $this->addFlash('success', 'L\'item a bien été modifié');
             return $this->redirectToRoute('app_gest_boutique');
@@ -172,25 +185,19 @@ function updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $im
 }
 
 // Fonction upload item qui prend un type file en paramètre
-function uploadImageItem($image){
-    // On récupère le nom de l'image
+function uploadImageItem($image, $isModify = false, $oldImage = null){
+    if ($isModify) {
+        unlink('images/items/' . $oldImage);
+    }
     $imageName = $image['name'];
-    // On récupère le chemin de l'image
     $imagePath = $image['tmp_name'];
-    // On récupère la taille de l'image
     $imageSize = $image['size'];
-    // On récupère l'extension de l'image
     $imageExtension = strtolower(substr(strrchr($imageName,'.'),1));
-    // On vérifie que l'extension de l'image est bien une image
     $extensionValide = array('jpg', 'jpeg', 'png');
     if (in_array($imageExtension, $extensionValide)) {
-        // On vérifie que la taille de l'image ne dépasse pas 2Mo
         if ($imageSize <= 2000000) {
-            // On crée un dossier pour l'image
             $imageFolder = 'images/items/';
-            // On crée le chemin de l'image
             $imagePath = $imageFolder . $imageName;
-            // On déplace l'image dans le dossier
             move_uploaded_file($image['tmp_name'], $imagePath);
         }
     }
