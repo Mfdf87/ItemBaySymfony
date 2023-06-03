@@ -57,7 +57,11 @@
             <!-- On ajoute l'image avec un input pour l'importer -->
             <div class="form-group">
                 <label for="image">Image de l'item</label>
-                <input type="file" class="form-control" id="image" name="image" placeholder="Image de l'item">
+                <input type="file" class="form-control" id="image" name="image" placeholder="Image de l'item" accept="image/png, image/jpeg, image/jpg">
+                <!-- On rajoute l'image dans file si elle existe déjà -->
+                {% if item is defined %}
+                    <input type="hidden" name="old_image" value="{{ item.url }}">
+                {% endif %}
             </div>
             {% if create is defined and create == true %}
                 <button type="submit" class="btn btn-primary">Créer</button>
