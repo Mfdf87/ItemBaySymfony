@@ -38,11 +38,11 @@ class PanierController extends AbstractController
             // On vérifie si l'utilisateur a assez d'argent
             if ($argent >= $prixTotal) {
                 foreach ($items as $item) {
-                    $appartenanceItem = $doctrine->getRepository(AppartenanceItem::class)->findOneBy(['itemId' => $item, 'userId' => $user]);
+                    $appartenanceItem = $doctrine->getRepository(AppartenanceItem::class)->findOneBy(['idItem' => $item, 'idUser' => $user]);
                     if (!$appartenanceItem) {
                         $appartenanceItem = new AppartenanceItem();
-                        $appartenanceItem->setUserId($user);
-                        $appartenanceItem->setItemId($item);
+                        $appartenanceItem->setIdUser($user);
+                        $appartenanceItem->setIdItem($item);
                         $appartenanceItem->setQuantite(1);
                     } else {
                         $appartenanceItem->setQuantite($appartenanceItem->getQuantite() + 1);
