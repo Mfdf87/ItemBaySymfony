@@ -91,8 +91,7 @@ class ItemController extends AbstractController
             $qte = $_POST['qte'];
             $stats = $_POST['stats'];
             if ($_FILES['image']['name'] != "") {
-                uploadImageItem($_FILES['image']);
-                $image = $_FILES['image']['name'];
+                $image = uploadImageItem($_FILES['image']);
             }
             else {
                 $image = "Defaut.png";
