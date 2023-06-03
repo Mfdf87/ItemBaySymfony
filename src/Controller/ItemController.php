@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Item;
+use App\Entity\AppartenanceItem;
 
 class ItemController extends AbstractController
 {
     #[Route('/item', name: 'item', methods: ['POST'])]
-    public function index(\App\Repository\ItemRepository $itemRepository, Request $request): Response
+    public function index(\App\Repository\ItemRepository $itemRepository, Request $request, ManagerRegistry $doctrine): Response
     {
         $session = $request->getSession();
         $id = $_POST['id'];
@@ -34,6 +37,17 @@ class ItemController extends AbstractController
             ]);
         }
         if ($action == "delete"){
+            // On vérifie que l'utilisateur est bien un admin
+            if (!$this->isGranted('ROLE_ADMIN')) {
+                // Sinon on le redirige vers la page d'accueil
+                $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
+                return $this->redirectToRoute('home.index');
+            }
+            else {
+                deleteItem($item, $doctrine);
+                $this->addFlash('success', 'L\'item a bien été supprimé');
+                return $this->redirectToRoute('app_gest_boutique');
+            }
             return $this->render('pages/item/index.html.twig', [
                 'item' => $item,
                 'delete' => 'true',
@@ -59,4 +73,16 @@ class ItemController extends AbstractController
             return $this->redirectToRoute('home.index');
         }
     }
+}
+
+function deleteItem($item, $doctrine){
+    // On va supprimer l'item dans tout les endroits dans lesquel il est présent dans appartenanceItem
+    $appartenanceItem = $doctrine->getRepository(AppartenanceItem::class)->findBy(['idItem' => $item]);
+    foreach ($appartenanceItem as $appartenance) {
+        $doctrine->getManager()->remove($appartenance);
+    }
+    $doctrine->getManager()->flush();
+    // On supprime l'item
+    $doctrine->getManager()->remove($item);
+    $doctrine->getManager()->flush();
 }
