@@ -20,7 +20,15 @@
         <tr>
           <td>{{ item.nom }}</td>
           <td>{{ item.description }}</td>
-          <td>{{ item.qte }}</td> 
+          <!-- On peux sélectionner la quantité avec un input, max étant la quantité disponible -->
+          <td>
+            <form method="POST" action="{{ path('app_panier') }}">
+              <input type="hidden" name="id" value="{{ item.id }}">
+              <input type="hidden" name="action" value="updateQuantity">
+              <input type="number" name="quantiteInCart" value="{{ item.quantiteInCart }}" min="1" max="{{ item.qte }}">
+              <button type="submit" class="btn btn-primary">Modifier la quantité</button>
+            </form>
+          </td>
           <td>{{ item.prix }}</td>
           <td>
             <div class="d-flex justify-content-between">
@@ -35,13 +43,7 @@
       {% endfor %}
     </tbody>
   </table>
-  <form method="POST" action="{{ path('app_panier') }}">
-    <input type="hidden" name="action" value="buy">
-    {% for item in items %}
-      <input type="hidden" name="id" value="{{ item.id }}">
-    {% endfor %}
-    <button type="submit" class="btn btn-success">Valider le panier</button>
-  </form>
+  <button type="button" class="btn btn-success" onclick="window.location.href='{{ path('app_panier_buy') }}'">Valider le panier</button>
 </div>
 
 {% endblock %}
