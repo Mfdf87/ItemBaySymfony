@@ -21,7 +21,7 @@
           <td>{{ item.nom }}</td>
           <td>{{ item.description }}</td>
           <td>{{ item.qte }}</td> 
-          <td>{{ item.qte }}</td>
+          <td>{{ item.prix }}</td>
           <td>
             <div class="d-flex justify-content-between">
               <form method="POST" action="{{ path('app_panier') }}">
@@ -35,6 +35,13 @@
       {% endfor %}
     </tbody>
   </table>
+  <form method="POST" action="{{ path('app_panier') }}">
+    <input type="hidden" name="action" value="buy">
+    {% for item in items %}
+      <input type="hidden" name="id" value="{{ item.id }}">
+    {% endfor %}
+    <button type="submit" class="btn btn-success">Valider le panier</button>
+  </form>
 </div>
 
 {% endblock %}

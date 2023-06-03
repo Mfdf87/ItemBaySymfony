@@ -31,6 +31,9 @@ class Item
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column]
+    private ?float $Prix = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Item
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->Prix;
+    }
+
+    public function setPrix(float $Prix): self
+    {
+        $this->Prix = $Prix;
 
         return $this;
     }

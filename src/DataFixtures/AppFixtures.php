@@ -157,6 +157,7 @@ class AppFixtures extends Fixture
             $date = new \DateTimeImmutable();
             $date = $date->modify('-' . $this->faker->numberBetween(0, 180) . ' day');
             $item->setCreatedAt($date);
+            $item->setPrix($this->faker->numberBetween(0, 1000));
             $manager->persist($item);
         }
 

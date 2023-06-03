@@ -28,6 +28,16 @@
                     {% include 'partials/_nav.html.twig' %}
                 {% endblock %}
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                     {% block body %}{% endblock %}
                 </main>
             </div>
