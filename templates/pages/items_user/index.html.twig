@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes items{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class = "text-center">Mes items</h1>
+{% if items is empty %}
+    <div class="alert alert-warning" role="alert">
+        Vous n'avez pas d'items
+    </div>
+{% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nom de l'item</th>
+        <th scope="col">Description</th>
+        <th scope="col">Quantité</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td>{{ item.nom }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.qte }}</td> 
+          <td>{{ item.prix }}</td>
+          <td>
+            <div class="d-flex justify-content-between">
+              <form method="POST" action="{{ path('item') }}">
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <input type="hidden" name="action" value="sell">
+                <button type="submit" class="btn btn-danger">Vendre</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+</div>
+
+{% endblock %}
