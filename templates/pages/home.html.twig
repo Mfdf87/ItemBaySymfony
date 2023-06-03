@@ -21,11 +21,6 @@
                 <div class="card-footer">
                   <div class="d-flex justify-content-between">
                   {% if app.user %}
-                  <form method="POST" action="{{ path('item') }}">
-                    <input type="hidden" name="id" value="{{ item.id }}">
-                    <input type="hidden" name="action" value="buy">
-                    <button type="submit" class="btn btn-primary">Acheter</button>
-                  </form>
                   <!-- On doit vérifier dans la session cart si jamais l'item n'est pas présent -->
                   {% if app.session.get('cart') is defined and app.session.get('cart') is not null %}
                     {% set cart = app.session.get('cart') %}

@@ -24,18 +24,6 @@ class ItemController extends AbstractController
                 'item' => $item,
             ]);
         }
-        if ($action == "buy"){
-            return $this->render('pages/item/index.html.twig', [
-                'item' => $item,
-                'buy' => 'true',
-            ]);
-        }
-        if ($action == "update"){
-            return $this->render('pages/item/update.html.twig', [
-                'item' => $item,
-                'update' => 'true',
-            ]);
-        }
         if ($action == "delete"){
             // On vérifie que l'utilisateur est bien un admin
             if (!$this->isGranted('ROLE_ADMIN')) {
@@ -66,6 +54,7 @@ class ItemController extends AbstractController
             }
             // On enregistre le panier dans la session
             $session->set('cart', $cart);
+            $session->set('quantiteInCart' . $item->getId(), 1);
 
             $this->addFlash('success', $item->getNom() . ' a bien été ajouté au panier');
 
