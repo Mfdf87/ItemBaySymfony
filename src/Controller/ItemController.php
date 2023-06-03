@@ -53,6 +53,8 @@ class ItemController extends AbstractController
             // On enregistre le panier dans la session
             $session->set('cart', $cart);
 
+            $this->addFlash('success', $item->getNom() . ' a bien été ajouté au panier');
+
             // On redirige vers la page d'accueil
             return $this->redirectToRoute('home.index');
         }

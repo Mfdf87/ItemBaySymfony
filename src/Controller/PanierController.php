@@ -76,7 +76,9 @@ class PanierController extends AbstractController
                 return $item->getId() != $id;
             });
             $session->set('cart', $cart);
-            $this->addFlash('success', 'Item supprimé du panier');
+            // Flash message avec le nom de l'item supprimé
+            $item = $doctrine->getRepository(Item::class)->find($id);
+            $this->addFlash('success', $item->getNom() . ' a bien été supprimé du panier');
         }
         $items = $request->getSession()->get('cart');
         if (!$items || $request->request->get('from') == 'home') {
