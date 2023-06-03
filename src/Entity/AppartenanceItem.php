@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AppartenanceItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppartenanceItemRepository::class)]
@@ -13,54 +15,114 @@ class AppartenanceItem
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $idUser = null;
+    #[ORM\ManyToMany(targetEntity: User::class)]
+    private Collection $user;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Item $idItem = null;
+    #[ORM\ManyToMany(targetEntity: Item::class)]
+    private Collection $item;
 
     #[ORM\Column]
-    private ?int $quantité = null;
+    private ?int $quantite = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Item $itemId = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $userId = null;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+        $this->item = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdUser(): ?User
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function setIdUser(User $idUser): self
+    public function addUser(User $user): self
     {
-        $this->idUser = $idUser;
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+        }
 
         return $this;
     }
 
-    public function getIdItem(): ?Item
+    public function removeUser(User $user): self
     {
-        return $this->idItem;
-    }
-
-    public function setIdItem(Item $idItem): self
-    {
-        $this->idItem = $idItem;
+        $this->user->removeElement($user);
 
         return $this;
     }
 
-    public function getQuantité(): ?int
+    /**
+     * @return Collection<int, Item>
+     */
+    public function getItem(): Collection
     {
-        return $this->quantité;
+        return $this->item;
     }
 
-    public function setQuantité(int $quantité): self
+    public function addItem(Item $item): self
     {
-        $this->quantité = $quantité;
+        if (!$this->item->contains($item)) {
+            $this->item->add($item);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        $this->item->removeElement($item);
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getItemId(): ?Item
+    {
+        return $this->itemId;
+    }
+
+    public function setItemId(?Item $itemId): self
+    {
+        $this->itemId = $itemId;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
