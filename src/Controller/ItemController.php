@@ -31,7 +31,7 @@ class ItemController extends AbstractController
             ]);
         }
         if ($action == "update"){
-            return $this->render('pages/item/index.html.twig', [
+            return $this->render('pages/item/update.html.twig', [
                 'item' => $item,
                 'update' => 'true',
             ]);
@@ -75,7 +75,7 @@ class ItemController extends AbstractController
     }
 
     // Route pour créer un item
-    #[Route('/item/create', name: 'item.create', methods: ['POST', 'GET'])]
+    #[Route('/item/create', name: 'item_create', methods: ['POST', 'GET'])]
     public function create(ManagerRegistry $doctrine): Response
     {
         // On vérifie que l'utilisateur est bien un admin
@@ -90,13 +90,47 @@ class ItemController extends AbstractController
             $prix = $_POST['prix'];
             $qte = $_POST['qte'];
             $stats = $_POST['stats'];
-            $image = $_POST['image'];
+            $image = $_FILES['image']['name'];
             createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image);
             $this->addFlash('success', 'L\'item a bien été créé');
             return $this->redirectToRoute('app_gest_boutique');
         }
         else {
-            return $this->render('pages/item/create.html.twig');
+            return $this->render('pages/item/update.html.twig', [
+                'create' => 'true',
+            ]);
+        }
+    }
+
+    #[Route('/item/update', name: 'item_update', methods: ['POST', 'GET'])]
+    public function update(\App\Repository\ItemRepository $itemRepository, Request $request, ManagerRegistry $doctrine): Response
+    {
+        // On vérifie que l'utilisateur est bien un admin
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            // Sinon on le redirige vers la page d'accueil
+            $this->addFlash('error', 'Vous n\'avez pas les droits pour accéder à cette page');
+            return $this->redirectToRoute('home.index');
+        }
+        else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+            $nom = $_POST['nom'];
+            $description = $_POST['description'];
+            $prix = $_POST['prix'];
+            $qte = $_POST['qte'];
+            $stats = $_POST['stats'];
+            uploadImageItem($_FILES['image']);
+            $imageName = $_FILES['image']['name'];
+            updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $imageName);
+            $this->addFlash('success', 'L\'item a bien été modifié');
+            return $this->redirectToRoute('app_gest_boutique');
+        }
+        else {
+            $id = $_GET['id'];
+            $item = $itemRepository->find($id);
+            return $this->render('pages/item/update.html.twig', [
+                'item' => $item,
+                'update' => 'true',
+            ]);
         }
     }
 }
@@ -124,4 +158,40 @@ function createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image){
     $item->setCreatedAt(new \DateTimeImmutable());
     $doctrine->getManager()->persist($item);
     $doctrine->getManager()->flush();
+}
+
+function updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $image){
+    $item = $doctrine->getRepository(Item::class)->find($id);
+    $item->setNom($nom);
+    $item->setDescription($description);
+    $item->setPrix($prix);
+    $item->setQte($qte);
+    $item->setStat($stats);
+    $item->setUrl($image);
+    $doctrine->getManager()->flush();
+}
+
+// Fonction upload item qui prend un type file en paramètre
+function uploadImageItem($image){
+    // On récupère le nom de l'image
+    $imageName = $image['name'];
+    // On récupère le chemin de l'image
+    $imagePath = $image['tmp_name'];
+    // On récupère la taille de l'image
+    $imageSize = $image['size'];
+    // On récupère l'extension de l'image
+    $imageExtension = strtolower(substr(strrchr($imageName,'.'),1));
+    // On vérifie que l'extension de l'image est bien une image
+    $extensionValide = array('jpg', 'jpeg', 'png');
+    if (in_array($imageExtension, $extensionValide)) {
+        // On vérifie que la taille de l'image ne dépasse pas 2Mo
+        if ($imageSize <= 2000000) {
+            // On crée un dossier pour l'image
+            $imageFolder = 'images/items/';
+            // On crée le chemin de l'image
+            $imagePath = $imageFolder . $imageName;
+            // On déplace l'image dans le dossier
+            move_uploaded_file($image['tmp_name'], $imagePath);
+        }
+    }
 }

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Item{% endblock %}
+
+{% block body %}
+<div class = "container mt-4">
+        {% if create is defined and create == true %}
+            <h1 class="text-center">Création d'un item</h1>
+        {% else %}
+            <h1 class="text-center">Modification de l'item {{ item.nom }}</h1>
+        {% endif %}
+        <div class="jumbotron">
+        </div>
+        
+        <form method="POST" action="{% if create is defined and create == true %}{{ path('item_create') }}{% else %}{{ path('item_update') }}{% endif %}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nom">Nom de l'item</label>
+                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom de l'item"
+                {% if item is defined %}
+                    value="{{ item.nom }}"
+                {% endif %}
+                >
+            </div>
+            <div class="form-group">
+                <label for="description">Description de l'item</label>
+                <input type="text" class="form-control" id="description" name="description" placeholder="Description de l'item"
+                {% if item is defined %}
+                    value="{{ item.description }}"
+                {% endif %}
+                >
+            </div>
+            <div class="form-group">
+                <label for="qte">Quantité de l'item</label>
+                <input type="number" class="form-control" id="qte" name="qte" placeholder="Quantité de l'item"
+                {% if item is defined %}
+                    value="{{ item.qte }}"
+                {% endif %}
+                >
+            </div>
+            <div class="form-group">
+                <label for="prix">Prix de l'item</label>
+                <input type="number" class="form-control" id="prix" name="prix" placeholder="Prix de l'item"
+                {% if item is defined %}
+                    value="{{ item.prix }}"
+                {% endif %}
+                >
+            </div>
+            <div class="form-group">
+                <label for="stats">Statistique</label>
+                <input type="text" class="form-control" id="stats" name="stats" placeholder="Statistique de l'item"
+                {% if item is defined %}
+                    value="{{ item.stat }}"
+                {% endif %}
+                >
+            </div>
+            <!-- On ajoute l'image avec un input pour l'importer -->
+            <div class="form-group">
+                <label for="image">Image de l'item</label>
+                <input type="file" class="form-control" id="image" name="image" placeholder="Image de l'item">
+            </div>
+            {% if create is defined and create == true %}
+                <button type="submit" class="btn btn-primary">Créer</button>
+            {% else %}
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            {% endif %}
+        </form>
+
+</div>
+{% endblock %}
