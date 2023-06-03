@@ -127,8 +127,10 @@ class ItemController extends AbstractController
             if ($_FILES['image']['name'] != "") {
                 $item = $itemRepository->find($id);
                 $oldImage = $item->getUrl();
-                uploadImageItem($_FILES['image'], true, $oldImage);
-                $imageName = $_FILES['image']['name'];
+                $imageName = uploadImageItem($_FILES['image'], true, $oldImage);
+            }
+            else if ($_POST['old_image'] != "") {
+                $imageName = $_POST['old_image'];
             }
             else {
                 $imageName = "Defaut.png";
@@ -155,6 +157,16 @@ function deleteItem($item, $doctrine){
         $doctrine->getManager()->remove($appartenance);
     }
     $doctrine->getManager()->flush();
+
+    // On supprime l'image de l'item
+    if ($item->getUrl() != "Defaut.png") {
+        try {
+            unlink('images/items/' . $item->getUrl());
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     // On supprime l'item
     $doctrine->getManager()->remove($item);
     $doctrine->getManager()->flush();
@@ -186,7 +198,7 @@ function updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $im
 
 // Fonction upload item qui prend un type file en paramètre
 function uploadImageItem($image, $isModify = false, $oldImage = null){
-    if ($isModify) {
+    if ($isModify && $oldImage != "Defaut.png") {
         unlink('images/items/' . $oldImage);
     }
     $imageName = $image['name'];
@@ -197,8 +209,10 @@ function uploadImageItem($image, $isModify = false, $oldImage = null){
     if (in_array($imageExtension, $extensionValide)) {
         if ($imageSize <= 2000000) {
             $imageFolder = 'images/items/';
+            $imageName = time() . "_" . $imageName;
             $imagePath = $imageFolder . $imageName;
             move_uploaded_file($image['tmp_name'], $imagePath);
         }
     }
+    return $imageName;
 }
