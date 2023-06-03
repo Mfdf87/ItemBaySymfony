@@ -61,6 +61,20 @@ class ItemController extends AbstractController
             // On redirige vers la page d'accueil
             return $this->redirectToRoute('home.index');
         }
+        if ($action == "update"){
+            // On vérifie que l'utilisateur est bien un admin
+            if (!$this->isGranted('ROLE_ADMIN')) {
+                // Sinon on le redirige vers la page d'accueil
+                $this->addFlash('error', 'Vous n\'avez pas les droits pour accéder à cette page');
+                return $this->redirectToRoute('home.index');
+            }
+            else {
+                return $this->render('pages/item/update.html.twig', [
+                    'item' => $item,
+                    'update' => 'true',
+                ]);
+            }
+        }
     }
 
     // Route pour créer un item
