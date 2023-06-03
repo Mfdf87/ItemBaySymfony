@@ -153,7 +153,7 @@ class AppFixtures extends Fixture
             $item->setStat($itemListe['stat']);
             $item->setDescription($itemListe['description']);
             $item->setQte($this->faker->numberBetween(0, 1000));
-            $item->setUrl($this->faker->imageUrl(640, 480, $itemListe['nom'], false, false));
+            $item->setUrl('Defaut.png');
             $date = new \DateTimeImmutable();
             $date = $date->modify('-' . $this->faker->numberBetween(0, 180) . ' day');
             $item->setCreatedAt($date);

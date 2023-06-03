@@ -4,6 +4,7 @@
 
 {% block body %}
 <div class="container mt-4">
+  <h1 class="text-center">Gestion des items de la boutique</h1>
   <table class="table">
     <thead>
       <tr>
@@ -20,7 +21,7 @@
           <td>{{ item.nom }}</td>
           <td>{{ item.description }}</td>
           <td>{{ item.qte }}</td> 
-          <td>{{ item.qte }}</td>  <!-- placeholder du prix   -->
+          <td>{{ item.prix }}</td>
           <td>
             <div class="d-flex justify-content-between">
               <form method="POST" action="{{ path('item') }}">
