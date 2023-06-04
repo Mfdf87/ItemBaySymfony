@@ -75,6 +75,40 @@ class ItemController extends AbstractController
                 ]);
             }
         }
+        if ($action == "sell"){
+            // On vérifie que l'utilisateur est bien connecté
+            if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+                // Sinon on le redirige vers la page de connexion
+                $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page');
+                return $this->redirectToRoute('app_connexion');
+            }
+            else {
+                // On récupère l'id de l'item qu'il veux vendre
+                $id = $_POST['id'];
+                $qte = $_POST['qte'];
+                // On récupère l'item
+                $item = $itemRepository->find($id);
+                // On récupère l'utilisateur connecté
+                $user = $this->getUser();
+
+                $appartenanceItem = $doctrine->getRepository(AppartenanceItem::class)->findOneBy(['idItem' => $item, 'idUser' => $user]);
+                $nbItems = $appartenanceItem->getQuantite();
+                $user->setMonnaie($user->getMonnaie() + ($item->getPrix() * $nbItems));
+                $appartenanceItem->setQuantite($appartenanceItem->getQuantite() - $qte);
+                // Si jamais la quantité de l'item est à 0, on supprime l'appartenance de l'utilisateur à l'item
+                if ($appartenanceItem->getQuantite() == 0) {
+                    $doctrine->getManager()->remove($appartenanceItem);
+                }
+                $doctrine->getManager()->flush();
+                $item->setQte($item->getQte() + $qte);
+                $doctrine->getManager()->flush();
+
+                $this->addFlash('success', 'Vous avez vendu ' . $qte . ' ' . $item->getNom());
+
+                // On redirige vers la page des items
+                return $this->redirectToRoute('app_items_user');
+            }
+        }
     }
 
     // Route pour créer un item

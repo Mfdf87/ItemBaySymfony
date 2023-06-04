@@ -23,6 +23,7 @@
     </thead>
     <tbody>
       {% for item in items %}
+        {% if item.qte != 0 %}
         <tr>
           <td><img src="/images/items/{{ item.url }}" class="card-img-top" alt="Image de l'item" style="max-height: 100px; max-width: 100px;"></td>
           <td>{{ item.nom }}</td>
@@ -34,11 +35,13 @@
               <form method="POST" action="{{ path('item') }}">
                 <input type="hidden" name="id" value="{{ item.id }}">
                 <input type="hidden" name="action" value="sell">
+                <input type="hidden" name="qte" value=" {{ item.qte }}">
                 <button type="submit" class="btn btn-danger">Vendre</button>
               </form>
             </div>
           </td>
         </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>
