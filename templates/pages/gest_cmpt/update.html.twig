@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur{% endblock %}
+
+{% block body %}
+<div class = "container mt-4">
+        <h1 class="text-center">Modification de l'utilisateur {{ user.nom }}</h1>
+        <form method="POST" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" value="{{ user.nom }}">
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom</label>
+                <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" value="{{ user.prenom }}">
+            </div>
+            <div class="form-group">
+                <label for="email">Adresse email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Adresse email" value="{{ user.email }}">
+            </div>
+            <input type="hidden" name="id" value="{{ user.id }}">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+
+</div>
+{% endblock %}

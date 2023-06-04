@@ -28,11 +28,7 @@
                   <input type="hidden" name="action" value="see">
                   <button type="submit" class="btn btn-info">Voir</button>
                 </form>
-                <form method="POST" action="{{ path('profil') }}">
-                  <input type="hidden" name="id" value="{{ compte.id }}">
-                  <input type="hidden" name="action" value="edit">
-                  <button type="submit" class="btn btn-warning">Modifier</button>
-                </form>
+                <button type="button" class="btn btn-warning" onclick="window.location.href='{{ path('profil_update', {'id': compte.id}) }}'">Modifier</button>
                 <form method="POST" action="{{ path('profil') }}">
                   <input type="hidden" name="id" value="{{ compte.id }}">
                   <input type="hidden" name="action" value="delete">
