@@ -130,14 +130,14 @@ class ProfilController extends AbstractController
     #[Route('/profil/delete/{id}', name: 'profil_delete', methods: ['GET'] )]
     public function deleteUser(\App\Repository\UserRepository $userRepository, $id, ManagerRegistry $doctrine): Response
     {
-        // On vérifie que l'utilisateur est connecté
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // On vérifie que l'utilisateur est admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // On récupère l'id en paramètre GET
         $id = $id ?? null;
 
-        // On affiche la page update.html.twig si l'utilisateur est admin
-        if ($id != null && $this->isGranted('ROLE_ADMIN')) {
+        // On vérifie que l'utilisateur est admin et que l'utilisateur à supprimer n'est pas celui connecté
+        if ($id != null && $this->isGranted('ROLE_ADMIN') && $this->getUser()->getId() != $id) {
             $user = $userRepository->find($id);
 
             $em = $doctrine->getManager();
@@ -147,7 +147,12 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('app_gest_cmpt');
         }
         else {
-            $this->addFlash('error', 'Vous n\'avez pas les droits pour supprimer ce compte');
+            if ($this->getUser()->getId() == $id) {
+                $this->addFlash('error', 'Vous ne pouvez pas supprimer votre propre compte');
+            }
+            else{
+                $this->addFlash('error', 'Vous n\'avez pas les droits pour supprimer ce compte');
+            }
             return $this->redirectToRoute('profil');
         }
     }
