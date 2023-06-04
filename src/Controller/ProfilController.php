@@ -70,6 +70,11 @@ class ProfilController extends AbstractController
                 $user->setNom($nom);
                 $user->setPrenom($prenom);
                 $user->setEmail($email);
+                if (isset($_FILES['photo']) && $_FILES['photo']['name'] != "") {
+                    $old_photo = $user->getPhoto();
+                    $newPhotoName = uploadPhotoUser($_FILES['photo'], $user, $doctrine, $old_photo);
+                    $user->setPhoto($newPhotoName);
+                }
                 // On enregistre les modifications en base de données
                 $em = $doctrine->getManager();
                 $em->persist($user);
@@ -89,6 +94,10 @@ class ProfilController extends AbstractController
                 $user->setNom($nom);
                 $user->setPrenom($prenom);
                 $user->setEmail($email);
+                if (isset($_FILES['photo']) && $_FILES['photo']['name'] != "") {
+                    $old_photo = $user->getPhoto();
+                    $user->setPhoto(uploadPhotoUser($_FILES['photo'], $user, $doctrine, $old_photo));
+                }
 
                 $em = $doctrine->getManager();
                 $em->persist($user);
@@ -139,7 +148,10 @@ class ProfilController extends AbstractController
         // On vérifie que l'utilisateur est admin et que l'utilisateur à supprimer n'est pas celui connecté
         if ($id != null && $this->isGranted('ROLE_ADMIN') && $this->getUser()->getId() != $id) {
             $user = $userRepository->find($id);
-
+            $old_photo = $user->getPhoto();
+            if ($old_photo != null) {
+                unlink('images/utilisateurs/' . $old_photo);
+            }
             $em = $doctrine->getManager();
             $em->remove($user);
             $em->flush();
@@ -156,4 +168,33 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('profil');
         }
     }
+}
+
+// Prend un type file en paramètre pour photo
+function uploadPhotoUser($photo, $user, $doctrine, $old_photo){
+    if ($old_photo != null) {
+        try{
+            unlink('images/utilisateurs/' . $old_photo);
+        }
+        catch(\Exception $e){
+        }
+    }
+    $photoName = $photo['name'];
+    $photoPath = $photo['tmp_name'];
+    $photoSize = $photo['size'];
+    $photoExtension = strtolower(substr(strrchr($photoName,'.'),1));
+    $extensionValide = array('jpg', 'jpeg', 'png');
+    if (in_array($photoExtension, $extensionValide)) {
+        if ($photoSize <= 2000000) {
+            $photoFolder = 'images/utilisateurs/';
+            $photoName = time() . "_" . $photoName;
+            $photoPath = $photoFolder . $photoName;
+            move_uploaded_file($photo['tmp_name'], $photoPath);
+            $user->setPhoto($photoName);
+            $em = $doctrine->getManager();
+            $em->persist($user);
+            $em->flush();
+        }
+    }
+    return $photoName;
 }
