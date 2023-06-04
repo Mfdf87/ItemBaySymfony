@@ -150,7 +150,18 @@ class ProfilController extends AbstractController
             $user = $userRepository->find($id);
             $old_photo = $user->getPhoto();
             if ($old_photo != null) {
-                unlink('images/utilisateurs/' . $old_photo);
+                try{
+                    unlink('images/utilisateurs/' . $old_photo);
+                }
+                catch(\Exception $e){
+                }
+            }
+            $appartenanceItemRepository = $doctrine->getRepository(\App\Entity\AppartenanceItem::class);
+            $appartenanceItems = $appartenanceItemRepository->findBy(['idUser' => $id]);
+            foreach ($appartenanceItems as $appartenanceItem) {
+                $em = $doctrine->getManager();
+                $em->remove($appartenanceItem);
+                $em->flush();
             }
             $em = $doctrine->getManager();
             $em->remove($user);
