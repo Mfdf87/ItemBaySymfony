@@ -27,7 +27,11 @@
                 {% if app.user %}
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle" width="32" height="32">
+                    {% if app.user.photo is null %}
+                        <img src="{{ asset('/images/utilisateurs/default.png') }}" alt="mdo" class="rounded-circle" width="32  " height="32">
+                    {% else %}
+                        <img src="{{ asset('/images/utilisateurs/' ~ user.photo) }}" alt="mdo" class="rounded-circle" width="32  " height="32">
+                    {% endif %}
                     </a>
                     <ul class="dropdown-menu text-small">
                         
