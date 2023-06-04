@@ -7,8 +7,8 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Nom du Compte</th>
-        <th scope="col">Prenom du Compte</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Prenom</th>
         <th scope="col">ID</th>
         <th scope="col">Email</th>
         <th scope="col">Actions</th>
@@ -28,16 +28,8 @@
                   <input type="hidden" name="action" value="see">
                   <button type="submit" class="btn btn-info">Voir</button>
                 </form>
-                <form method="POST" action="{{ path('profil') }}">
-                  <input type="hidden" name="id" value="{{ compte.id }}">
-                  <input type="hidden" name="action" value="edit">
-                  <button type="submit" class="btn btn-warning">Modifier</button>
-                </form>
-                <form method="POST" action="{{ path('profil') }}">
-                  <input type="hidden" name="id" value="{{ compte.id }}">
-                  <input type="hidden" name="action" value="delete">
-                  <button type="submit" class="btn btn-danger">Supprimer</button>
-                </form>
+                <button type="button" class="btn btn-warning" onclick="window.location.href='{{ path('profil_update', {'id': compte.id}) }}'">Modifier</button>
+                <button type="button" class="btn btn-danger" onclick="if (confirm('Voulez-vous vraiment supprimer ce compte ?')) { window.location.href='{{ path('profil_delete', {'id': compte.id}) }}' }">Supprimer</button>
               </div>
           </td>
         </tr>
