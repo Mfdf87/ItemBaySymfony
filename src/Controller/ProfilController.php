@@ -148,7 +148,10 @@ class ProfilController extends AbstractController
         // On vérifie que l'utilisateur est admin et que l'utilisateur à supprimer n'est pas celui connecté
         if ($id != null && $this->isGranted('ROLE_ADMIN') && $this->getUser()->getId() != $id) {
             $user = $userRepository->find($id);
-
+            $old_photo = $user->getPhoto();
+            if ($old_photo != null) {
+                unlink('images/utilisateurs/' . $old_photo);
+            }
             $em = $doctrine->getManager();
             $em->remove($user);
             $em->flush();
@@ -170,7 +173,11 @@ class ProfilController extends AbstractController
 // Prend un type file en paramètre pour photo
 function uploadPhotoUser($photo, $user, $doctrine, $old_photo){
     if ($old_photo != null) {
-        unlink('images/utilisateurs/' . $old_photo);
+        try{
+            unlink('images/utilisateurs/' . $old_photo);
+        }
+        catch(\Exception $e){
+        }
     }
     $photoName = $photo['name'];
     $photoPath = $photo['tmp_name'];
