@@ -3,3 +3,13 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+requete_sql:
+    path: requete_sql
+    controller: App\Controller\QueteController::requeteSql
+    methods: [POST]
+
+ajout_monnaie:
+    path: ajout_monnaie
+    controller: App\Controller\QueteController::ajoutMonnaie
+    methods: [POST]
