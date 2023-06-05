@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Enigme;
 use Doctrine\ORM\EntityManagerInterface;
-use SebastianBergmann\Environment\Console;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Console\Event\ConsoleEvent;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class QueteController extends AbstractController
 {
     #[Route('/quete', name: 'app_quete',methods: ['GET','POST'])]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager,Request $request): Response
     {
         //recuperer l'id de l'utilisateur connecté
         $user = $this->getUser();
@@ -22,6 +23,15 @@ class QueteController extends AbstractController
             'quete' => $user->getQuete(),
         ]);
     }
+
+    #[Route('/queterandom/{difficulte}', name: 'app_random',methods: 'GET')]
+    public function randomEnigme(EntityManagerInterface $entityManager,int $difficulte): Response
+    {
+        $enigme = $entityManager->getRepository(Enigme::class)->getEnigmeAleatoire($difficulte);
+        json_encode($enigme);
+        return $this->json($enigme);
+    }
+    
     public function requeteSql(EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();

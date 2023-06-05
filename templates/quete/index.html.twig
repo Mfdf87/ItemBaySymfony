@@ -89,86 +89,21 @@
 	{% else %}
 		<script>
 		AOS.init();
-		document.getElementById('enigmeFclbtn').addEventListener('click', function() { 
-		   Swal.fire({
-				title: 'Quel est le bon hotel ?',
-				html: `
-				A,B,C et D sont des nombres à un chiffre
-				<br>Les équations suivantes sont toutes vraies !<br>
-				A + C = D <br>
-				A x B = C <br>
-				C - B = B <br>
-				A x 4 = D <br>
-				Dans l'ordre, quelles sont les valeurs de A, B, C et D ?
-				`,
-				input: 'text',
-			}).then((result) => {
-  				if (result.value == '2368') {
-  				  Swal.fire({
-					title:'Bien joué',
-					html: `
-						Bonne réponse!
-						<br>
-						ABCD = 2368.<br>
-						Etant donné que A + C et que A x 4 sont tous
-						les deux égaux à D, alors C doit être égal à 3A.
-						Si C B = B, alors C doit être égal à 2B. Le
-						seul chiffre divisible à la fois par 2 et par 3
-						est 6.<br>
-						Une fois que l'on sait que c = 6, le reste doit
-						couler de source.<br>
-						<form action="{{ path('ajout_monnaie') }}" method="POST">
-							<button type="submit" class="swal2-confirm btn btn-primary">Retour</button>
-						</form>
-					`,
-					icon: 'success',
-					showConfirmButton: false,
-				});
-  				}else{
-					Swal.fire('Faux', 'Désolé mais malheursement ce n\'est pas la bonne réponse', 'error');
-  				}
-			})
-		});
-
-		document.getElementById('enigmeMoynbtn').addEventListener('click', function() { 
-		   Swal.fire({
-				imageUrl: '{{ asset('img/enigme3.png') }}',
-				showConfirmButton: false,
-				html: `
-					<button id="btnA" class="swal2-confirm btn btn-primary">A) O gramme</button>
-					<button id="btnB" class="swal2-confirm btn btn-success">B) Moins de 100 grammes</button>
-					<button id="btnC" class="swal2-confirm btn btn-warning">C) 100 grammes exactement</button>
-					<button id="btnD" class="swal2-confirm btn btn-danger">D) Plus de 100 grammes</button>
-				`,
-			})
-			document.getElementById('btnA').addEventListener('click', function() {
-				Swal.fire('Faux', 'Désolé mais malheursement ce n\' est pas pas l\'hotel', 'error');
-			});
-
-			document.getElementById('btnB').addEventListener('click', function() {
-				Swal.fire({
-					title:'Bien joué',
-					text: 'Bravo vous avez bien vue les lettre H O T E L cachées sur dans la facade du batiment.',
-					icon: 'success',
-					showConfirmButton: false,
-					html: `
-						<form action="{{ path('ajout_monnaie') }}" method="POST">
-							<button type="submit" class="swal2-confirm btn btn-primary">Retour </button>
-						</form>
-				`,
-				});
-				document.getElementById('tutoDiv1').style.display = 'none';
-				document.getElementById('tutoDiv2').style.display = 'block';
-				AOS.init();
-			});
-
-			document.getElementById('btnC').addEventListener('click', function() {
-				Swal.fire('FauxB', 'Désolé mais malheursement ce n\'est pas pas l\'hotel', 'error');
-			});
-
-			document.getElementById('btnD').addEventListener('click', function() {
-				Swal.fire('Faux', 'Désolé mais malheursement ce n\'est pas pas l\'hotel', 'error');
-			});
+		document.getElementById('enigmeFclbtn').addEventListener('click', function() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '{{path('app_random', {'difficulte': '_difficulte'}) }}'.replace('_difficulte', 1), true);
+  			xhr.onload = function() {
+    			// Vérifier le statut de la réponse
+    			if (xhr.status === 200) {
+    			  	// La requête a été réussie, faire quelque chose avec la réponse
+    			  	console.log(xhr.responseText);
+					//si enigme[0].img != null Swal fire avec image sinon sans image
+    			} else {
+    			  // La requête a échoué, gérer l'erreur
+    			  console.error('Erreur lors de la requête.');
+    			}
+  			};
+  			xhr.send();
 		});
 	</script>
 
