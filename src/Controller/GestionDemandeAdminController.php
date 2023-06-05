@@ -42,6 +42,14 @@ class GestionDemandeAdminController extends AbstractController
             return $demandeAdmin;
         }, $demandesAdmin);
 
+        $demandesAdmin = array_filter($demandesAdmin, function($demandeAdmin) {
+            return $demandeAdmin->nomTypeDemande != 'Type de demande inconnue';
+        });
+        
+        $demandesAdmin = array_filter($demandesAdmin, function($demandeAdmin) {
+            return $demandeAdmin->getValidatedBy() == null;
+        });
+
         usort($demandesAdmin, function($a, $b) {
             if ($a->getDateSubmition() == $b->getDateSubmition()) {
                 return strcmp($a->nomTypeDemande, $b->nomTypeDemande);
@@ -65,6 +73,7 @@ class GestionDemandeAdminController extends AbstractController
 
         $demandeAdmin = $doctrine->getRepository(DemandeAdmin::class)->find($id);
         $demandeAdmin->setAccept(true);
+        $demandeAdmin->setValidatedBy($this->getUser());
         $doctrine->getManager()->flush();
 
         $this->addFlash('success', 'La demande a bien été acceptée');
@@ -78,9 +87,10 @@ class GestionDemandeAdminController extends AbstractController
             $this->addFlash('danger', 'Vous n\'avez pas accès à cette page');
             return $this->redirectToRoute('home.index');
         }
-        
+
         $demandeAdmin = $doctrine->getRepository(DemandeAdmin::class)->find($id);
-        $doctrine->getManager()->remove($demandeAdmin);
+        $demandeAdmin->setAccept(false);
+        $demandeAdmin->setValidatedBy($this->getUser());
         $doctrine->getManager()->flush();
 
         $this->addFlash('success', 'La demande a bien été refusée');

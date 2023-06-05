@@ -35,6 +35,9 @@ class DemandeAdmin
     #[ORM\ManyToOne]
     private ?User $CreatedBy = null;
 
+    #[ORM\ManyToOne]
+    private ?User $validatedBy = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class DemandeAdmin
     public function setCreatedBy(?User $CreatedBy): self
     {
         $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+    public function getValidatedBy(): ?User
+    {
+        return $this->validatedBy;
+    }
+
+    public function setValidatedBy(?User $validatedBy): self
+    {
+        $this->validatedBy = $validatedBy;
 
         return $this;
     }
