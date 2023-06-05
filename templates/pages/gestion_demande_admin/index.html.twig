@@ -13,6 +13,7 @@
         <th scope="col">Date</th>
         <th scope="col">Joueur</th>
         <th scope="col">Créé par</th>
+        <th scope="col">Montant</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -29,6 +30,11 @@
             {% endif %}
             {% if demande.typeDemande != 1 %}
                 <td><a href="{{ path('profil_show', {'id': demande.CreatedBY.id}) }}">{{ demande.CreatedBY.Nom }}</a></td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            {% if demande.typeDemande == 2 %}
+                <td>{{ demande.somme }} </td>
             {% else %}
                 <td>-</td>
             {% endif %}
