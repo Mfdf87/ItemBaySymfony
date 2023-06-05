@@ -55,13 +55,13 @@ class ProfilController extends AbstractController
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $user = $this->getUser();
                 if ($user->getId() != $id) {
-                    $this->addFlash('error', 'Vous n\'avez pas les droits pour modifier ce compte');
+                    $this->addFlash('danger', 'Vous n\'avez pas les droits pour modifier ce compte');
                     return $this->redirectToRoute('profil');
                 }
                 // Il faut aussi vérifier que l'email n'est pas déjà utilisé
                 $user = $userRepository->findOneBy(['email' => $email]);
                 if ($user != null && $user->getId() != $id) {
-                    $this->addFlash('error', 'Cet email est déjà utilisé');
+                    $this->addFlash('danger', 'Cet email est déjà utilisé');
                     return $this->redirectToRoute('profil');
                 }
 
@@ -86,7 +86,7 @@ class ProfilController extends AbstractController
                 // On vérifie que l'email n'est pas déjà utilisé par un autre utilisateur
                 $user = $userRepository->findOneBy(['email' => $email]);
                 if ($user != null && $user->getId() != $id) {
-                    $this->addFlash('error', 'Cet email est déjà utilisé');
+                    $this->addFlash('danger', 'Cet email est déjà utilisé');
                     return $this->redirectToRoute('app_gest_cmpt');
                 }
 
@@ -124,7 +124,7 @@ class ProfilController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             $user = $this->getUser();
             if ($user->getId() != $id) {
-                $this->addFlash('error', 'Vous n\'avez pas les droits pour modifier ce compte');
+                $this->addFlash('danger', 'Vous n\'avez pas les droits pour modifier ce compte');
                 return $this->redirectToRoute('profil');
             }
             else {
@@ -171,10 +171,10 @@ class ProfilController extends AbstractController
         }
         else {
             if ($this->getUser()->getId() == $id) {
-                $this->addFlash('error', 'Vous ne pouvez pas supprimer votre propre compte');
+                $this->addFlash('danger', 'Vous ne pouvez pas supprimer votre propre compte');
             }
             else{
-                $this->addFlash('error', 'Vous n\'avez pas les droits pour supprimer ce compte');
+                $this->addFlash('danger', 'Vous n\'avez pas les droits pour supprimer ce compte');
             }
             return $this->redirectToRoute('profil');
         }
