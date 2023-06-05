@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use COM;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
@@ -33,6 +34,14 @@ class Item
 
     #[ORM\Column]
     private ?float $Prix = null;
+
+    #[ORM\Column]
+    private ?int $categorie_id = null;
+
+    #[ORM\ManyToOne(targetEntity: TypeItem::class, inversedBy: 'item')]
+    #[ORM\JoinColumn(name: 'categorie_id', referencedColumnName: 'id')]
+    private $typeItem;
+
 
     public function getId(): ?int
     {
@@ -119,6 +128,30 @@ class Item
     public function setPrix(float $Prix): self
     {
         $this->Prix = $Prix;
+
+        return $this;
+    }
+
+    public function getCategorieId(): ?int
+    {
+        return $this->categorie_id;
+    }
+
+    public function setCategorieId(int $categorie_id): self
+    {
+        $this->categorie_id = $categorie_id;
+
+        return $this;
+    }
+
+    public function getTypeItem()
+    {
+        return $this->typeItem;
+    }
+
+    public function setTypeItem($typeItem): self
+    {
+        $this->typeItem = $typeItem;
 
         return $this;
     }

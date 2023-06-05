@@ -9,7 +9,7 @@
             <div id="links">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     {% if app.user %}
-                        <li><a href="#" class="nav-link px-2 link-secondary">Boutique</a></li>
+                        <li><a href="{{ path('home.index') }}" class="nav-link px-2 link-secondary">Boutique</a></li>
                         <li><a href="{{ path('app_quete') }}" class="nav-link px-2 link-secondary">Quête</a></li>
                     {% endif %}
                     {% if not app.user %}
