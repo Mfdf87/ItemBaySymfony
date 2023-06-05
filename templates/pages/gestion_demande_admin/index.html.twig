@@ -34,8 +34,8 @@
             {% endif %}
             <td>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-warning" onclick="window.location.href='#'">Accepter</button>
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='#'">Refuser</button>
+                    <button type="button" class="btn btn-warning" onclick="if (confirm('Voulez-vous vraiment accepter cette demande ?')) { window.location.href='{{ path('app_gestion_demande_admin_accept', {'id': demande.id}) }}' } ">Accepter</button>
+                    <button type="button" class="btn btn-danger" onclick="if (confirm('Voulez-vous vraiment refuser cette demande ?')) { window.location.href='{{ path('app_gestion_demande_admin_refuse', {'id': demande.id}) }}' }">Refuser</button>
                 </div>
             </td>
         </tr>

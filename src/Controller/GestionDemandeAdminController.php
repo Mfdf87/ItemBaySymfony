@@ -49,10 +49,41 @@ class GestionDemandeAdminController extends AbstractController
             return $a->getDateSubmition() < $b->getDateSubmition() ? -1 : 1;
         });
 
-        //dd($demandesAdmin);
         return $this->render('pages/gestion_demande_admin/index.html.twig', [
             'controller_name' => 'GestionDemandeAdminController',
             'demandes' => $demandesAdmin
         ]);
+    }
+
+    #[Route('/gestion/demande/admin/accept/{id}', name: 'app_gestion_demande_admin_accept', methods: ['GET'])]
+    public function accept(ManagerRegistry $doctrine, int $id): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à cette page');
+            return $this->redirectToRoute('home.index');
+        }
+
+        $demandeAdmin = $doctrine->getRepository(DemandeAdmin::class)->find($id);
+        $demandeAdmin->setAccept(true);
+        $doctrine->getManager()->flush();
+
+        $this->addFlash('success', 'La demande a bien été acceptée');
+        return $this->redirectToRoute('app_gestion_demande_admin');
+    }
+
+    #[Route('/gestion/demande/admin/refuse/{id}', name: 'app_gestion_demande_admin_refuse', methods: ['GET'])]
+    public function refuse(ManagerRegistry $doctrine, int $id): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à cette page');
+            return $this->redirectToRoute('home.index');
+        }
+        
+        $demandeAdmin = $doctrine->getRepository(DemandeAdmin::class)->find($id);
+        $doctrine->getManager()->remove($demandeAdmin);
+        $doctrine->getManager()->flush();
+
+        $this->addFlash('success', 'La demande a bien été refusée');
+        return $this->redirectToRoute('app_gestion_demande_admin');
     }
 }
