@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes support{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+  <h1 class="text-center">Gestion des demandes du support</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Type demande</th>
+        <th scope="col">Description / Raison</th>
+        <th scope="col">Date</th>
+        <th scope="col">Joueur</th>
+        <th scope="col">Créé par</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for demande in demandes %}
+        <tr>
+            <td>{{ demande.nomTypeDemande }}</td>
+            <td>{{ demande.description }}</td>
+            <td>{{ demande.dateSubmition|date('d/m/Y') }}</td>
+            {% if demande.typeDemande == 3 %}
+                <td>{{ demande.NomJoueur }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            {% if demande.typeDemande != 1 %}
+                <td><a href="{{ path('profil_show', {'id': demande.CreatedBY.id}) }}">{{ demande.CreatedBY.Nom }}</a></td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            <td>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-warning" onclick="if (confirm('Voulez-vous vraiment accepter cette demande ?')) { window.location.href='{{ path('app_gestion_demande_admin_accept', {'id': demande.id}) }}' } ">Accepter</button>
+                    <button type="button" class="btn btn-danger" onclick="if (confirm('Voulez-vous vraiment refuser cette demande ?')) { window.location.href='{{ path('app_gestion_demande_admin_refuse', {'id': demande.id}) }}' }">Refuser</button>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

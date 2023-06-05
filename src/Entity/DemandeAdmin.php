@@ -24,9 +24,6 @@ class DemandeAdmin
     private ?string $Description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Raison = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $NomJoueur = null;
 
     #[ORM\Column]
@@ -37,6 +34,9 @@ class DemandeAdmin
 
     #[ORM\ManyToOne]
     private ?User $CreatedBy = null;
+
+    #[ORM\ManyToOne]
+    private ?User $validatedBy = null;
 
     public function getId(): ?int
     {
@@ -75,18 +75,6 @@ class DemandeAdmin
     public function setDescription(?string $Description): self
     {
         $this->Description = $Description;
-
-        return $this;
-    }
-
-    public function getRaison(): ?string
-    {
-        return $this->Raison;
-    }
-
-    public function setRaison(?string $Raison): self
-    {
-        $this->Raison = $Raison;
 
         return $this;
     }
@@ -135,6 +123,18 @@ class DemandeAdmin
     public function setCreatedBy(?User $CreatedBy): self
     {
         $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+    public function getValidatedBy(): ?User
+    {
+        return $this->validatedBy;
+    }
+
+    public function setValidatedBy(?User $validatedBy): self
+    {
+        $this->validatedBy = $validatedBy;
 
         return $this;
     }
