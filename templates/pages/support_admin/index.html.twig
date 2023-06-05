@@ -8,7 +8,7 @@
             <h2 class="display-4">Demande admin</h2>
             <p class="lead">Pour une demande d'admin merci de remplir l'un de ces formulaires</p>
             <hr class="my-4">
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                     <th>Demande</th>
@@ -22,16 +22,18 @@
                     <td>Signaler un problème technique ou une erreur sur le site web</td>
                     <td><a href="{{ path('app_demande_admin', { 'id': 1 }) }}">Remplir le formulaire</a></td>
                     </tr>
-                    <tr>
-                    <td>Demander de l'argent</td>
-                    <td>Faire une demande de remboursement ou de compensation</td>
-                    <td><a href="{{ path('app_demande_admin', { 'id': 2 }) }}">Remplir le formulaire</a></td>
-                    </tr>
-                    <tr>
-                    <td>Signaler un joueur ou item</td>
-                    <td>Signaler un comportement inapproprié d'un joueur ou d'un item sur le site web</td>
-                    <td><a href="{{ path('app_demande_admin', { 'id': 3 }) }}">Remplir le formulaire</a></td>
-                    </tr>
+                    {% if app.user %}
+                        <tr>
+                        <td>Demander de l'argent</td>
+                        <td>Faire une demande de remboursement ou de compensation</td>
+                        <td><a href="{{ path('app_demande_admin', { 'id': 2 }) }}">Remplir le formulaire</a></td>
+                        </tr>
+                        <tr>
+                        <td>Signaler un joueur ou item</td>
+                        <td>Signaler un comportement inapproprié d'un joueur ou d'un item sur le site web</td>
+                        <td><a href="{{ path('app_demande_admin', { 'id': 3 }) }}">Remplir le formulaire</a></td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
