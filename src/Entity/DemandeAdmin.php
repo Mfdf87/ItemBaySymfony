@@ -24,9 +24,6 @@ class DemandeAdmin
     private ?string $Description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Raison = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $NomJoueur = null;
 
     #[ORM\Column]
@@ -75,18 +72,6 @@ class DemandeAdmin
     public function setDescription(?string $Description): self
     {
         $this->Description = $Description;
-
-        return $this;
-    }
-
-    public function getRaison(): ?string
-    {
-        return $this->Raison;
-    }
-
-    public function setRaison(?string $Raison): self
-    {
-        $this->Raison = $Raison;
 
         return $this;
     }

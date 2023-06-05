@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil', name: 'profil', methods: ['GET', 'POST'])]
+    #[Route('/profil', name: 'profil', methods: ['POST'])]
     public function index(\App\Repository\UserRepository $userRepository): Response
     {        
         // On vérifie que l'utilisateur est connecté
@@ -31,6 +31,40 @@ class ProfilController extends AbstractController
         }
         else {
             $user = $this->getUser();
+            return $this->render('pages/profil/index.html.twig', [
+                'controller_name' => 'ProfilController',
+                'user' => $user
+            ]);
+        }
+    }
+
+    #[Route('/profil/{id}', name: 'profil_show', methods: ['GET'])]
+    public function showUser(\App\Repository\UserRepository $userRepository, $id): Response
+    {
+        // On vérifie que l'utilisateur est connecté
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $id = $id ?? null;
+
+        // Si l'utilisateur connecté n'est pas un admin, on vérifie que l'id de l'utilisateur connecté est le même que celui passé en paramètre
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $user = $this->getUser();
+            if ($user->getId() != $id) {
+                $this->addFlash('danger', 'Vous n\'avez pas les droits pour voir ce compte');
+                return $this->redirectToRoute('home.index');
+            }
+            else {
+                $user = $userRepository->find($id);
+                return $this->render('pages/profil/index.html.twig', [
+                    'controller_name' => 'ProfilController',
+                    'user' => $user
+                ]);
+            }
+        }
+
+        // Si l'utilisateur connecté est un admin, on récupère l'utilisateur en fonction de l'id passé en paramètre
+        if($this->isGranted('ROLE_ADMIN')) {
+            $user = $userRepository->find($id);
             return $this->render('pages/profil/index.html.twig', [
                 'controller_name' => 'ProfilController',
                 'user' => $user
