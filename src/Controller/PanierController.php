@@ -79,7 +79,7 @@ class PanierController extends AbstractController
         // Le prix total est calculé en fonction de la quantité de chaque item multiplié par le prix de l'item
         foreach ($cart as $item) {
             if ($session->get('quantiteInCart' . $item->getId()) > $item->getQte()) {
-                $this->addFlash('error', 'Vous ne pouvez pas acheter plus de ' . $item->getQte() . ' ' . $item->getNom() . 's');
+                $this->addFlash('danger', 'Vous ne pouvez pas acheter plus de ' . $item->getQte() . ' ' . $item->getNom() . 's');
                 return $this->redirectToRoute('app_panier');
             }
             $prixTotal += $item->getPrix() * $session->get('quantiteInCart' . $item->getId());
@@ -118,7 +118,7 @@ class PanierController extends AbstractController
             $this->addFlash('success', 'Achat effectué avec succès');
         }
         else {
-            $this->addFlash('error', 'Vous n\'avez pas assez d\'argent');
+            $this->addFlash('danger', 'Vous n\'avez pas assez d\'argent');
         }
         return $this->redirectToRoute('app_items_user');
     }

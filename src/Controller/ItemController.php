@@ -65,7 +65,7 @@ class ItemController extends AbstractController
             // On vérifie que l'utilisateur est bien un admin
             if (!$this->isGranted('ROLE_ADMIN')) {
                 // Sinon on le redirige vers la page d'accueil
-                $this->addFlash('error', 'Vous n\'avez pas les droits pour accéder à cette page');
+                $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
                 return $this->redirectToRoute('home.index');
             }
             else {
@@ -79,7 +79,7 @@ class ItemController extends AbstractController
             // On vérifie que l'utilisateur est bien connecté
             if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
                 // Sinon on le redirige vers la page de connexion
-                $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page');
+                $this->addFlash('danger', 'Vous devez être connecté pour accéder à cette page');
                 return $this->redirectToRoute('app_connexion');
             }
             else {
@@ -118,7 +118,7 @@ class ItemController extends AbstractController
         // On vérifie que l'utilisateur est bien un admin
         if (!$this->isGranted('ROLE_ADMIN')) {
             // Sinon on le redirige vers la page d'accueil
-            $this->addFlash('error', 'Vous n\'avez pas les droits pour accéder à cette page');
+            $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
             return $this->redirectToRoute('home.index');
         }
         else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -150,7 +150,7 @@ class ItemController extends AbstractController
         // On vérifie que l'utilisateur est bien un admin
         if (!$this->isGranted('ROLE_ADMIN')) {
             // Sinon on le redirige vers la page d'accueil
-            $this->addFlash('error', 'Vous n\'avez pas les droits pour accéder à cette page');
+            $this->addFlash('danger', 'Vous n\'avez pas les droits pour accéder à cette page');
             return $this->redirectToRoute('home.index');
         }
         else if ($_SERVER['REQUEST_METHOD'] == 'POST') {

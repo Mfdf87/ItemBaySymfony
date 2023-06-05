@@ -19,7 +19,7 @@ class RegistrationController extends AbstractController
     {
         // Si l'utilisateur est déjà connecté, on le redirige vers la page d'accueil
         if ($this->getUser()) {
-            $this->addFlash('error', 'Vous êtes déjà connecté');
+            $this->addFlash('danger', 'Vous êtes déjà connecté');
             return $this->redirectToRoute('home.index');
         }
         
