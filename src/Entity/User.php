@@ -158,4 +158,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+    #[ORM\Column]
+    private ?int $Quete = null;
+
+    public function getQuete(): ?int
+    {
+        return $this->Quete;
+    }
+
+    public function setQuete(int $Quete): self
+    {
+        $this->Quete = $Quete;
+
+        return $this;
+    }
 }

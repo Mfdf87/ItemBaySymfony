@@ -168,6 +168,7 @@ class AppFixtures extends Fixture
         $user->setNom("admin");
         $user->setPrenom("admin");
         $user->setMonnaie(1000000000);
+        $user->setQuete(0);
         $manager->persist($user);
 
         $user = new User();
@@ -177,6 +178,7 @@ class AppFixtures extends Fixture
         $user->setNom("user");
         $user->setPrenom("user");
         $user->setMonnaie(1000);
+        $user->setQuete(0);
         $manager->persist($user);
 
         // On créé 100 users aléatoires
@@ -188,6 +190,7 @@ class AppFixtures extends Fixture
             $user->setNom($this->faker->lastName);
             $user->setPrenom($this->faker->firstName);
             $user->setMonnaie($this->faker->numberBetween(0, 1000));
+            $user->setQuete(0);
             $manager->persist($user);
         }
 

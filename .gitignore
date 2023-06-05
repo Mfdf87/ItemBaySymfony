@@ -20,3 +20,7 @@ composer.lock
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+package.json
+node_modules/.package-lock.json
+package-lock.json
+.gitignore
