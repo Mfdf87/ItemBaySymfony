@@ -45,7 +45,7 @@ class GestionDemandeAdminController extends AbstractController
         $demandesAdmin = array_filter($demandesAdmin, function($demandeAdmin) {
             return $demandeAdmin->nomTypeDemande != 'Type de demande inconnue';
         });
-        
+
         $demandesAdmin = array_filter($demandesAdmin, function($demandeAdmin) {
             return $demandeAdmin->getValidatedBy() == null;
         });
@@ -72,6 +72,10 @@ class GestionDemandeAdminController extends AbstractController
         }
 
         $demandeAdmin = $doctrine->getRepository(DemandeAdmin::class)->find($id);
+        if ($demandeAdmin->getTypeDemande() == 2) {
+            $demandeAdmin->getCreatedBy()->setMonnaie($demandeAdmin->getCreatedBy()->getMonnaie() + $demandeAdmin->getSomme());
+        }
+
         $demandeAdmin->setAccept(true);
         $demandeAdmin->setValidatedBy($this->getUser());
         $doctrine->getManager()->flush();
