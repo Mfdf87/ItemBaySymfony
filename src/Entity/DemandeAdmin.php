@@ -14,36 +14,33 @@ class DemandeAdmin
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateSubmition = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $infoSup = null;
+    #[ORM\Column]
+    private ?bool $accept = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Description = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Raison = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $NomJoueur = null;
 
     #[ORM\Column]
-    private ?bool $accept = null;
+    private ?int $TypeDemande = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Raison = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $Somme = null;
+
+    #[ORM\ManyToOne]
+    private ?User $CreatedBy = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function getDateSubmition(): ?\DateTimeInterface
@@ -54,18 +51,6 @@ class DemandeAdmin
     public function setDateSubmition(\DateTimeInterface $dateSubmition): self
     {
         $this->dateSubmition = $dateSubmition;
-
-        return $this;
-    }
-
-    public function getInfoSup(): ?string
-    {
-        return $this->infoSup;
-    }
-
-    public function setInfoSup(string $infoSup): self
-    {
-        $this->infoSup = $infoSup;
 
         return $this;
     }
@@ -82,14 +67,74 @@ class DemandeAdmin
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(?string $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
     public function getRaison(): ?string
     {
         return $this->Raison;
     }
 
-    public function setRaison(string $Raison): self
+    public function setRaison(?string $Raison): self
     {
         $this->Raison = $Raison;
+
+        return $this;
+    }
+
+    public function getNomJoueur(): ?string
+    {
+        return $this->NomJoueur;
+    }
+
+    public function setNomJoueur(?string $NomJoueur): self
+    {
+        $this->NomJoueur = $NomJoueur;
+
+        return $this;
+    }
+
+    public function getTypeDemande(): ?int
+    {
+        return $this->TypeDemande;
+    }
+
+    public function setTypeDemande(int $TypeDemande): self
+    {
+        $this->TypeDemande = $TypeDemande;
+
+        return $this;
+    }
+
+    public function getSomme(): ?int
+    {
+        return $this->Somme;
+    }
+
+    public function setSomme(?int $Somme): self
+    {
+        $this->Somme = $Somme;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->CreatedBy;
+    }
+
+    public function setCreatedBy(?User $CreatedBy): self
+    {
+        $this->CreatedBy = $CreatedBy;
 
         return $this;
     }
