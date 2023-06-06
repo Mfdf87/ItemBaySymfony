@@ -18,7 +18,7 @@ class TypeItem
     #[ORM\Column(length: 255)]
     private ?string $nomTypeItem = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 255)]
     private ?string $icon = null;
 
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'typeItem')]

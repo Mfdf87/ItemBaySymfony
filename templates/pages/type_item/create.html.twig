@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Type item{% endblock %}
+
+{% block body %}
+<div class = "container mt-4">
+        {% if create is defined and create == true %}
+            <h1 class="text-center">Création d'un type d'item</h1>
+        {% else %}
+            <h1 class="text-center">Modification du type {{ type_item.nom }}</h1>
+            <div class="jumbotron text-center">
+                <img src="/images/type_items/{{ type_item.icon }}" class="card-img-top" alt="Icone de l'item" style="max-height: 400px; max-width: 400px;">
+            </div>
+        {% endif %}
+        
+        <form method="POST" action="{% if create is defined and create == true %}{{ path('type_item_create') }}{% else %}{{ path('type_item_update') }}{% endif %}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nom_type_item">Nom du type</label>
+                <input type="text" class="form-control" id="nom_type_item" name="nom_type_item" placeholder="Nom du type"
+                {% if item is defined %}
+                    value="{{ item.nom }}"
+                {% endif %}
+                >
+            </div>
+
+            <!-- On ajoute l'icone avec un input pour l'importer -->
+            <div class="form-group">
+                <label for="icon">Image du type</label>
+                <input type="file" class="form-control" id="icon" name="icon" placeholder="Icone de l'item" accept="image/png, image/jpeg, image/jpg">
+                <!-- On rajoute l'image dans file si elle existe déjà -->
+                {% if item is defined %}
+                    <input type="hidden" name="old_icone" value="{{ item.icon }}">
+                {% endif %}
+            </div>
+            {% if create is defined and create == true %}
+                <button type="submit" class="btn btn-primary">Créer</button>
+            {% else %}
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            {% endif %}
+        </form>
+
+</div>
+{% endblock %}
