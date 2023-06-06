@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Item;
 use App\Entity\AppartenanceItem;
+use App\Entity\TypeItem;
 use App\Repository\TypeItemRepository;
 
 class ItemController extends AbstractController
@@ -134,13 +135,19 @@ class ItemController extends AbstractController
             else {
                 $image = "Defaut.png";
             }
-            createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image);
+            // On récupère le type de l'item de la table TypeItem en fonction de l'id passé en POST qui correspond à l'id du type
+            // On fait le find sur l'id du type car c'est la clé primaire de la table TypeItem
+            $typePost = $_POST['type'];
+            $type = $doctrine->getRepository(TypeItem::class)->find($typePost);
+            createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image, $type);
             $this->addFlash('success', 'L\'item a bien été créé');
             return $this->redirectToRoute('app_gest_boutique');
         }
         else {
+            $types = $doctrine->getRepository(TypeItem::class)->findAll();
             return $this->render('pages/item/update.html.twig', [
                 'create' => 'true',
+                'types' => $types,
             ]);
         }
     }
@@ -223,7 +230,7 @@ function deleteItem($item, $doctrine){
     $doctrine->getManager()->flush();
 }
 
-function createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image){
+function createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image, $type){
     $item = new Item();
     $item->setNom($nom);
     $item->setDescription($description);
@@ -232,6 +239,7 @@ function createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image){
     $item->setStat($stats);
     $item->setUrl($image);
     $item->setCreatedAt(new \DateTimeImmutable());
+    $item->setTypeItem($type);
     $doctrine->getManager()->persist($item);
     $doctrine->getManager()->flush();
 }

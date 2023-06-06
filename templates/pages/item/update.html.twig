@@ -54,6 +54,19 @@
                 {% endif %}
                 >
             </div>
+            <div class="form-group">
+                <label for="type">Type de l'item</label>
+                <select class="form-select" aria-label="Default select example" name="type">
+                    {% for type in types %}
+                        {% if item is defined and item.type == type.id %}
+                            <option value="{{ type.id }}" selected>{{ type.nomTypeItem }}</option>
+                        {% else %}
+                            <option value="{{ type.id }}">{{ type.nomTypeItem }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
             <!-- On ajoute l'image avec un input pour l'importer -->
             <div class="form-group">
                 <label for="image">Image de l'item</label>
