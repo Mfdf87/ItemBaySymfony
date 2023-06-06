@@ -21,16 +21,8 @@
           <td>{{ typeItem.nomTypeItem }}</td>
           <td>
             <div class="d-flex justify-content-between">
-              <form method="POST" action="{{ path('item') }}">
-                <input type="hidden" name="id" value="{{ typeItem.id }}">
-                <input type="hidden" name="action" value="update">
-                <button type="submit" class="btn btn-warning">Modifier</button>
-              </form>
-              <form method="POST" action="{{ path('item') }}">
-                <input type="hidden" name="id" value="{{ typeItem.id }}">
-                <input type="hidden" name="action" value="delete">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
-              </form>
+              <button type="button" class="btn btn-warning" onclick="window.location.href='{{ path('type_item_modify', {'id': typeItem.id}) }}'">Modifier</button>
+              <button type="button" class="btn btn-danger" onclick="window.location.href='{{ path('type_item_delete', {'id': typeItem.id}) }}'">Supprimer</button>
             </div>
           </td>
         </tr>
