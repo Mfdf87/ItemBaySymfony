@@ -35,7 +35,7 @@
                     </a>
                     <ul class="dropdown-menu text-small">
                         
-                            <li><a class="dropdown-item" href="{{ path('profil') }}">Voir profil</a></li>
+                            <li><a class="dropdown-item" href="{{ path('profil_show', {'id': app.user.id}) }}">Voir profil</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_items_user') }}">Mes items</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_demande_user') }}">Mes demandes</a></li>
                             {% if app.session.get('cart') %}
