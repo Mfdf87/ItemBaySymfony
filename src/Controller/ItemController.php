@@ -204,6 +204,15 @@ class ItemController extends AbstractController
     public function itemsByType(\App\Repository\ItemRepository $itemRepository,TypeItemRepository $typeItemRepository): Response
     {
         $id = $_POST['type'];
+        if ($id == 0) {
+            $items = $itemRepository->findAll();
+            $typeItems = $typeItemRepository->findAll();
+            return $this->render('pages/home.html.twig', [
+                'items' => $items,
+                'typeItems' => $typeItems,
+                'typeSelect' => $id
+            ]);
+        }
         $typeItems = $typeItemRepository->findAll();
         $items = $itemRepository->findBy(['typeItem' => $id]);
         return $this->render('pages/home.html.twig', [
