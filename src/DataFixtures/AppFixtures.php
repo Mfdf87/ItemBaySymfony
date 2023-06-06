@@ -196,6 +196,34 @@ class AppFixtures extends Fixture
             'type_item' => $listeTypeItemObjets[1]
         ];
 
+        $listeItems[] = [
+            'nom' => 'Boule de feu',
+            'stat' => 'Attaque',
+            'description' => 'Une boule de feu',
+            'type_item' => $listeTypeItemObjets[3]
+        ];
+
+        $listeItems[] = [
+            'nom' => 'Boule de glace',
+            'stat' => 'Attaque',
+            'description' => 'Une boule de glace',
+            'type_item' => $listeTypeItemObjets[3]
+        ];
+
+        $listeItems[] = [
+            'nom' => 'Boule de foudre',
+            'stat' => 'Attaque',
+            'description' => 'Une boule de foudre',
+            'type_item' => $listeTypeItemObjets[3]
+        ];
+
+        $listeItems[] = [
+            'nom' => 'Boule de poison',
+            'stat' => 'Attaque',
+            'description' => 'Une boule de poison',
+            'type_item' => $listeTypeItemObjets[3]
+        ];
+
         foreach ($listeItems as $itemListe) {
             $item = new Item();
             $item->setNom($itemListe['nom']);
