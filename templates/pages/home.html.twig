@@ -8,6 +8,7 @@
             <li class="nav-item">
               <form method="POST" action="{{ path('app_items_type') }}">
                 <select class="form-select"  name='type' aria-label="Default select example">
+                  <option selected value="0">Tous les types</option>
                   {% for typeItem in typeItems %}
                       {% if typeSelect is defined and typeItem.id == typeSelect %}
                           <option value="{{ typeItem.id }}" selected>{{ typeItem.nomTypeItem }}</option>
