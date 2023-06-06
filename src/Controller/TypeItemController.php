@@ -159,7 +159,11 @@ class TypeItemController extends AbstractController
 
             // On supprime l'image du type d'item
             if ($typeItem->getIcon() != "Defaut.png") {
-                unlink('images/type_items/' . $typeItem->getIcon());
+                try {
+                    unlink('images/type_items/' . $typeItem->getIcon());
+                }
+                catch (\Exception $e) {
+                }
             }
 
             // On supprime le type d'item
