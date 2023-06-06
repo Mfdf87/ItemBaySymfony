@@ -65,7 +65,7 @@ class TypeItemController extends AbstractController
 
             // On redirige vers la page de création d'un type d'item
             $this->addFlash('success', 'Le type d\'item a bien été créé');
-            return $this->redirectToRoute('type_item_create');
+            return $this->redirectToRoute('type_item_show');
         }
         else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             return $this->render('pages/type_item/create.html.twig', [
@@ -118,7 +118,7 @@ class TypeItemController extends AbstractController
 
             // On redirige vers la page de modification d'un type d'item
             $this->addFlash('success', 'Le type d\'item a bien été modifié');
-            return $this->redirectToRoute('type_item_modify', ['id' => $id]);
+            return $this->redirectToRoute('type_item_show', ['id' => $id]);
         }
         else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             // On récupère le manager de Doctrine
@@ -179,7 +179,11 @@ class TypeItemController extends AbstractController
 
 function uploadTypeItemImage($image, $nomTypeItem, $isModify = false, $oldImage = null, ){
     if ($isModify && $oldImage != "Defaut.png") {
-        unlink('images/type_items/' . $oldImage);
+        try {
+            unlink('images/type_items/' . $oldImage);
+        }
+        catch (\Exception $e) {
+        }
     }
     $imageName = $image['name'];
     $imagePath = $image['tmp_name'];
