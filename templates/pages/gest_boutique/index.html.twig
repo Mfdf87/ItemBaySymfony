@@ -7,6 +7,7 @@
   <h1 class="text-center">Gestion des items de la boutique</h1>
   <!-- On créé un bouton d'ajout d'item qui renvoit vers item_create-->
   <button type="button" class="btn btn-success" onclick="window.location.href='{{ path('item_create') }}'">Ajouter un item</button>
+  <button type="button" class="btn btn-success" onclick="window.location.href='{{ path('type_item_create') }}'">Ajouter un type d'item</button>
   <table class="table">
     <thead>
       <tr>
@@ -15,6 +16,7 @@
         <th scope="col">Description</th>
         <th scope="col">Quantité</th>
         <th scope="col">Prix</th>
+        <th scope="col">Type</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -26,6 +28,7 @@
           <td>{{ item.description }}</td>
           <td>{{ item.qte }}</td> 
           <td>{{ item.prix }}</td>
+          <td>{{ item.typeItem.nomTypeItem }}</td>
           <td>
             <div class="d-flex justify-content-between">
               <form method="POST" action="{{ path('item') }}">

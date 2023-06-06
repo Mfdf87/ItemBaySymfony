@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des types d'items{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+  <h1 class="text-center">Gestion des types d'items</h1>
+  <button type="button" class="btn btn-success" onclick="window.location.href='{{ path('type_item_create') }}'">Ajouter un type d'item</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Type</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for typeItem in typesItems %}
+        <tr>
+          <td><img src="/images/type_items/{{ typeItem.icon }}" class="card-img-top" alt="Image du type" style="max-height: 100px; max-width: 100px;"></td>
+          <td>{{ typeItem.nomTypeItem }}</td>
+          <td>
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-warning" onclick="window.location.href='{{ path('type_item_modify', {'id': typeItem.id}) }}'">Modifier</button>
+              <button type="button" class="btn btn-danger" onclick="window.location.href='{{ path('type_item_delete', {'id': typeItem.id}) }}'">Supprimer</button>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

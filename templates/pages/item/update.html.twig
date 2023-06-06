@@ -58,7 +58,7 @@
                 <label for="type">Type de l'item</label>
                 <select class="form-select" aria-label="Default select example" name="type">
                     {% for type in types %}
-                        {% if item is defined and item.type == type.id %}
+                        {% if item is defined and item.typeItem.id == type.id %}
                             <option value="{{ type.id }}" selected>{{ type.nomTypeItem }}</option>
                         {% else %}
                             <option value="{{ type.id }}">{{ type.nomTypeItem }}</option>
