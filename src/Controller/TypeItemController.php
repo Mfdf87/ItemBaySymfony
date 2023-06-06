@@ -10,6 +10,21 @@ use App\Entity\TypeItem;
 
 class TypeItemController extends AbstractController
 {
+    #[Route('/type/item/show', name: 'type_item_show', methods: ['GET'])]
+    public function show(ManagerRegistry $doctrine): Response
+    {
+        // On récupère le manager de Doctrine
+        $manager = $doctrine->getManager();
+
+        // On récupère tous les types d'items
+        $typesItems = $manager->getRepository(TypeItem::class)->findAll();
+
+        // On affiche la page de liste des types d'items
+        return $this->render('pages/type_item/show.html.twig', [
+            'typesItems' => $typesItems
+        ]);
+    }
+    
     #[Route('/type/item/create', name: 'type_item_create', methods: ['POST', 'GET'])]
     public function create(ManagerRegistry $doctrine): Response
     {
