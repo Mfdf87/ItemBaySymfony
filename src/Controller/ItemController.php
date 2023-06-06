@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Item;
 use App\Entity\AppartenanceItem;
+use App\Repository\TypeItemRepository;
 
 class ItemController extends AbstractController
 {
@@ -183,6 +184,20 @@ class ItemController extends AbstractController
                 'update' => 'true',
             ]);
         }
+    }
+
+    //route pour filtrer les items par type
+    #[Route('/items', name: 'app_items_type', methods: ['POST'])]
+    public function itemsByType(\App\Repository\ItemRepository $itemRepository,TypeItemRepository $typeItemRepository): Response
+    {
+        $id = $_POST['type'];
+        $typeItems = $typeItemRepository->findAll();
+        $items = $itemRepository->findBy(['typeItem' => $id]);
+        return $this->render('pages/home.html.twig', [
+            'items' => $items,
+            'typeItems' => $typeItems,
+            'typeSelect' => $id
+        ]);
     }
 }
 

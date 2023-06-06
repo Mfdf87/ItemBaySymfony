@@ -1,7 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
-
+{% block nav %}
+  <nav class="col-md-3 col-lg-2 col-sm-1 d-md-block bg-light sidebar collapse">
+    <div class="position-sticky sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+              <form method="POST" action="{{ path('app_items_type') }}">
+                <select class="form-select"  name='type' aria-label="Default select example">
+                  <option selected value="0">Tous les types</option>
+                  {% for typeItem in typeItems %}
+                      {% if typeSelect is defined and typeItem.id == typeSelect %}
+                          <option value="{{ typeItem.id }}" selected>{{ typeItem.nomTypeItem }}</option>
+                      {% else %}
+                          <option value="{{ typeItem.id }}">{{ typeItem.nomTypeItem }}</option>
+                      {% endif %}
+                  {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+              </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
 {% block body %}
     <div class = "container mt-4">
         <h1 class = "text-center">Bienvenue sur ItemBay</h1>
@@ -15,8 +37,9 @@
                 {% endif %}
                 <img src="/images/items/{{ item.url }}" class="card-img-top" alt="Image de l'item" style="max-height: 400px; max-width: 400px;">
                 <div class="card-body">
+                  <img src="/img/{{ item.typeItem.icon }}" alt="Type item" style="max-height: 40px; max-width: 40px;">
                   <h5 class="card-title text-center">{{item.nom}}</h5>
-                  <p class="card-text text-center">{{item.description}}</p>
+                  <p class="card-text text-center">{{item.description}} - Prix : {{item.prix}}</p>
                 </div>
                 <div class="card-footer">
                   <div class="d-flex justify-content-between">

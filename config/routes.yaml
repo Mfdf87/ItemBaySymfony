@@ -13,3 +13,8 @@ ajout_monnaie:
     path: ajout_monnaie
     controller: App\Controller\QueteController::ajoutMonnaie
     methods: [POST]
+
+filtre_item:
+    path: filtre_item
+    controller: App\Controller\ItemController::itemsByType
+    methods: [POST]

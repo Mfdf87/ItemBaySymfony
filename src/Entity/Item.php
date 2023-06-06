@@ -34,6 +34,10 @@ class Item
     #[ORM\Column]
     private ?float $Prix = null;
 
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeItem $typeItem = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +123,18 @@ class Item
     public function setPrix(float $Prix): self
     {
         $this->Prix = $Prix;
+
+        return $this;
+    }
+
+    public function getTypeItem(): ?TypeItem
+    {
+        return $this->typeItem;
+    }
+
+    public function setTypeItem(?TypeItem $typeItem): self
+    {
+        $this->typeItem = $typeItem;
 
         return $this;
     }
