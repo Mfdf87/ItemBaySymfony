@@ -16,6 +16,7 @@
         <th scope="col">Description</th>
         <th scope="col">Quantité</th>
         <th scope="col">Prix</th>
+        <th scope="col">Type</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -27,6 +28,7 @@
           <td>{{ item.description }}</td>
           <td>{{ item.qte }}</td> 
           <td>{{ item.prix }}</td>
+          <td>{{ item.typeItem.nomTypeItem }}</td>
           <td>
             <div class="d-flex justify-content-between">
               <form method="POST" action="{{ path('item') }}">

@@ -71,9 +71,11 @@ class ItemController extends AbstractController
                 return $this->redirectToRoute('home.index');
             }
             else {
+                $types = $doctrine->getRepository(TypeItem::class)->findAll();
                 return $this->render('pages/item/update.html.twig', [
                     'item' => $item,
                     'update' => 'true',
+                    'types' => $types,
                 ]);
             }
         }
@@ -168,6 +170,8 @@ class ItemController extends AbstractController
             $prix = $_POST['prix'];
             $qte = $_POST['qte'];
             $stats = $_POST['stats'];
+            $typePost = $_POST['type'];
+            $type = $doctrine->getRepository(TypeItem::class)->find($typePost);
             if ($_FILES['image']['name'] != "") {
                 $item = $itemRepository->find($id);
                 $oldImage = $item->getUrl();
@@ -179,16 +183,18 @@ class ItemController extends AbstractController
             else {
                 $imageName = "Defaut.png";
             }
-            updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $imageName);
+            updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $imageName, $type);
             $this->addFlash('success', 'L\'item a bien été modifié');
             return $this->redirectToRoute('app_gest_boutique');
         }
         else {
             $id = $_GET['id'];
             $item = $itemRepository->find($id);
+            $types = $doctrine->getRepository(TypeItem::class)->findAll();
             return $this->render('pages/item/update.html.twig', [
                 'item' => $item,
                 'update' => 'true',
+                'types' => $types,
             ]);
         }
     }
@@ -244,7 +250,7 @@ function createItem($doctrine, $nom, $description, $prix, $qte, $stats, $image, 
     $doctrine->getManager()->flush();
 }
 
-function updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $image){
+function updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $image, $type){
     $item = $doctrine->getRepository(Item::class)->find($id);
     $item->setNom($nom);
     $item->setDescription($description);
@@ -252,6 +258,7 @@ function updateItem($doctrine, $id, $nom, $description, $prix, $qte, $stats, $im
     $item->setQte($qte);
     $item->setStat($stats);
     $item->setUrl($image);
+    $item->setTypeItem($type);
     $doctrine->getManager()->flush();
 }
 
