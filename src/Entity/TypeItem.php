@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TypeItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +23,14 @@ class TypeItem
 
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'typeItem')]
     private $item;
+
+    #[ORM\OneToMany(mappedBy: 'typeItem', targetEntity: Item::class)]
+    private Collection $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,5 +64,27 @@ class TypeItem
     public function getItems(): Collection
     {
         return $this->item;
+    }
+
+    public function addItem(Item $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setTypeItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getTypeItem() === $this) {
+                $item->setTypeItem(null);
+            }
+        }
+
+        return $this;
     }
 }

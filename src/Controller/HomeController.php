@@ -6,6 +6,7 @@ use App\Entity\Item;
 use App\Repository\ItemRepository;
 use App\Repository\TypeItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,14 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', 'home.index', methods: ['GET'])]
-    public function index(ItemRepository $repository, EntityManagerInterface $entityManagerInterface,TypeItemRepository $typeItemRepository) :Response
+    public function index(ItemRepository $repository, EntityManagerInterface $entityManagerInterface,TypeItemRepository $typeItemRepository, ManagerRegistry $doctrine) :Response
     {
-        $repository = $entityManagerInterface->getRepository(Item::class);
-        $items = $repository->createQueryBuilder('item')
-            ->leftJoin('item.typeItem', 'typeItem')
-            ->select('item', 'typeItem')
-            ->getQuery()
-            ->getResult();
+        // On récupère tous les items
+        $items = $repository->findAll();
 
         $typeItems = $typeItemRepository->findAll();
         // On enlève les items dont la quantité est nulle ou négative

@@ -2,10 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Account;
-use App\Entity\Compte;
 use App\Entity\Item;
 use App\Entity\User;
+use App\Entity\TypeItem;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -26,125 +25,175 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $listeTypeItemObjets = [];
+        // Création des types d'items
+        $listeTypesItems[] = [
+            'nom_type_item' => 'Arme',
+            'icon' => 'epee.png'
+        ];
+
+        $listeTypesItems[] = [
+            'nom_type_item' => 'Armure',
+            'icon' => 'armure.png'
+        ];
+
+        $listeTypesItems[] = [
+            'nom_type_item' => 'Potion',
+            'icon' => 'potion.png'
+        ];
+
+        $listeTypesItems[] = [
+            'nom_type_item' => 'Magie',
+            'icon' => 'magie.png'
+        ];
+
+        foreach ($listeTypesItems as $listeTypeItem) {
+            $typeItem = new TypeItem();
+            $typeItem->setNomTypeItem($listeTypeItem['nom_type_item']);
+            $typeItem->setIcon($listeTypeItem['icon']);
+            $manager->persist($typeItem);
+            $listeTypeItemObjets[] = $typeItem;
+        }
+        
         // Liste des items à créer
         $listeItems[] = [
             'nom' => 'Potion de soin',
             'stat' => 'PV',
-            'description' => 'Restaure 50 PV'
+            'description' => 'Restaure 50 PV',
+            'type_item' => $listeTypeItemObjets[2]
         ];
 
         $listeItems[] = [
             'nom' => 'Potion de mana',
             'stat' => 'Mana',
-            'description' => 'Restaure 50 points de mana'
+            'description' => 'Restaure 50 points de mana',
+            'type_item' => $listeTypeItemObjets[2]
         ];
         
         $listeItems[] = [
             'nom' => 'Épée en acier',
             'stat' => 'Attaque',
-            'description' => 'Une épée en acier de qualité'
+            'description' => 'Une épée en acier de qualité',
+            'type_item' => $listeTypeItemObjets[0]
         ];
         
         $listeItems[] = [
             'nom' => 'Armure de cuir',
             'stat' => 'Défense',
-            'description' => 'Une armure légère en cuir'
+            'description' => 'Une armure légère en cuir',
+            'type_item' => $listeTypeItemObjets[1]
         ];
         
         $listeItems[] = [
             'nom' => 'Arc long',
             'stat' => 'Attaque',
-            'description' => 'Un arc long pour les archers'
+            'description' => 'Un arc long pour les archers',
+            'type_item' => $listeTypeItemObjets[0]
         ];
 
         $listeItems[] = [
             'nom' => 'Bâton de mage',
             'stat' => 'Attaque',
-            'description' => 'Un bâton de mage pour les mages'
+            'description' => 'Un bâton de mage pour les mages',
+            'type_item' => $listeTypeItemObjets[0]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en bois',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en bois pour les guerriers'
+            'description' => 'Un bouclier en bois pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en acier',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en acier pour les guerriers'
+            'description' => 'Un bouclier en acier pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en fer',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en fer pour les guerriers'
+            'description' => 'Un bouclier en fer pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en or',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en or pour les guerriers'
+            'description' => 'Un bouclier en or pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en diamant',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en diamant pour les guerriers'
+            'description' => 'Un bouclier en diamant pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en mithril',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en mithril pour les guerriers'
+            'description' => 'Un bouclier en mithril pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en adamantium',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en adamantium pour les guerriers'
+            'description' => 'Un bouclier en adamantium pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Bouclier en obsidienne',
             'stat' => 'Défense',
-            'description' => 'Un bouclier en obsidienne pour les guerriers'
+            'description' => 'Un bouclier en obsidienne pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Casque en cuir',
             'stat' => 'Défense',
-            'description' => 'Un casque en cuir pour les guerriers'
+            'description' => 'Un casque en cuir pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Casque en acier',
             'stat' => 'Défense',
-            'description' => 'Un casque en acier pour les guerriers'
+            'description' => 'Un casque en acier pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Casque en fer',
             'stat' => 'Défense',
-            'description' => 'Un casque en fer pour les guerriers'
+            'description' => 'Un casque en fer pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Casque en or',
             'stat' => 'Défense',
-            'description' => 'Un casque en or pour les guerriers'
+            'description' => 'Un casque en or pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Casque en diamant',
             'stat' => 'Défense',
-            'description' => 'Un casque en diamant pour les guerriers'
+            'description' => 'Un casque en diamant pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         $listeItems[] = [
             'nom' => 'Casque en mithril',
             'stat' => 'Défense',
-            'description' => 'Un casque en mithril pour les guerriers'
+            'description' => 'Un casque en mithril pour les guerriers',
+            'type_item' => $listeTypeItemObjets[1]
         ];
 
         foreach ($listeItems as $itemListe) {
@@ -158,6 +207,10 @@ class AppFixtures extends Fixture
             $date = $date->modify('-' . $this->faker->numberBetween(0, 180) . ' day');
             $item->setCreatedAt($date);
             $item->setPrix($this->faker->numberBetween(0, 1000));
+            // Si jamais l'item contient un type, on le lie à l'item
+            if ($itemListe['type_item'] != null) {
+                $item->setTypeItem($itemListe['type_item']);
+            }
             $manager->persist($item);
         }
 
