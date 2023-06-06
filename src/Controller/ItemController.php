@@ -192,7 +192,7 @@ class ItemController extends AbstractController
     {
         $id = $_POST['type'];
         $typeItems = $typeItemRepository->findAll();
-        $items = $itemRepository->findBy(['categorie_id' => $id]);
+        $items = $itemRepository->findBy(['typeItem' => $id]);
         return $this->render('pages/home.html.twig', [
             'items' => $items,
             'typeItems' => $typeItems,
