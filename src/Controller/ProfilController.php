@@ -210,7 +210,7 @@ class ProfilController extends AbstractController
             else{
                 $this->addFlash('danger', 'Vous n\'avez pas les droits pour supprimer ce compte');
             }
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('app_gest_cmpt');
         }
     }
 }
