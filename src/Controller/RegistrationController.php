@@ -40,6 +40,7 @@ class RegistrationController extends AbstractController
             $user->setPrenom($form->get('prenom')->getData());
             $user->setMonnaie(10);
             $user->setRoles(['ROLE_USER']);
+            $user->setQuete(0);
 
             $entityManager->persist($user);
             $entityManager->flush();
