@@ -41,3 +41,6 @@ Un utilisateur lambda est déjà créé avec les identifiants suivants :
 email : user.user@user.user
 mot de passe : utilisateur
 ```
+
+## Informations supplémentaires
+Vous trouverez le cahier des charges et les informations supplémentaires dans le wiki.
